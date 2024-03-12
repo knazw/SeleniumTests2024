@@ -16,7 +16,7 @@ public class RegisterTests extends BaseTest{
     static final Logger log = getLogger(lookup().lookupClass());
 
     // todo: remove it
-    @Test
+
     public void write() {
         createUser();
     }
