@@ -32,7 +32,7 @@ public class CheckoutCompletedPage extends ExtendedBasePage implements IHasHeade
     }
 
     public OrderDetailsPage clickOrderDetailsLink() {
-        click(orderDetails);
+        clickWithWait(orderDetails, 10);
 
         return new OrderDetailsPage(driver);
     }

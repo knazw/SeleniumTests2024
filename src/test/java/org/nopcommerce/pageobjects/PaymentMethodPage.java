@@ -38,7 +38,7 @@ public class PaymentMethodPage extends ExtendedBasePage implements IHasHeaderUpp
     }
 
     public PaymentMethodPage clickCreditCard() {
-        click(creditCard);
+        clickWithWait(creditCard, 10);
 
         return this;
     }

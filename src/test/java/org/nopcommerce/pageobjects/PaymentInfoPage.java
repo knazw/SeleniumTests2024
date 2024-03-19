@@ -3,6 +3,7 @@ package org.nopcommerce.pageobjects;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pagefragments.HeaderUpper;
 import org.nopcommerce.pagefragments.MenuItems;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -51,7 +52,10 @@ public class PaymentInfoPage extends ExtendedBasePage implements IHasHeaderUpper
     }
 
     public PaymentInfoPage fillCardholderName(String name) {
-        type(cardholderName, name);
+        By byItem = getByFromElement(cardholderName.toString());
+        WebElement foundCardholderName = findWithWait(byItem, 10);
+
+        type(foundCardholderName, name);
 
         return this;
     }
@@ -75,15 +79,11 @@ public class PaymentInfoPage extends ExtendedBasePage implements IHasHeaderUpper
         return this;
     }
 
-
     public ConfirmOrderPage clickContinueButton() {
         click(continueButton);
 
         return new ConfirmOrderPage(driver);
     }
-
-
-
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
