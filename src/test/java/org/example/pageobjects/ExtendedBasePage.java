@@ -43,6 +43,7 @@ public class ExtendedBasePage {
 
         log.debug("page load timeout: "+driver.manage().timeouts().getPageLoadTimeout().toString());
 
+        /*
         try {
             DevTools devTools = ((HasDevTools) driver).getDevTools();
             devTools.createSession();
@@ -59,6 +60,7 @@ public class ExtendedBasePage {
             e.printStackTrace();
             driver.quit();
         }
+        */
 
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
@@ -79,6 +81,7 @@ public class ExtendedBasePage {
 
         log.debug("page load timeout: "+driver.manage().timeouts().getPageLoadTimeout().toString());
 
+        /*
         try {
             DevTools devTools = ((HasDevTools) driver).getDevTools();
             devTools.createSession();
@@ -95,6 +98,7 @@ public class ExtendedBasePage {
             e.printStackTrace();
             driver.quit();
         }
+        */
 
     }
     public WebElement find(By element) {
@@ -123,12 +127,11 @@ public class ExtendedBasePage {
 
         By byElement = getByFromElement(element.toString());
 
-        Wait<WebDriver> wait1 = new WebDriverWait(driver, Duration.ofSeconds(15))
+        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(15))
                 .pollingEvery(Duration.ofMillis(250));
-        WebElement elem = wait1.until(ExpectedConditions.elementToBeClickable(byElement));
+        WebElement elem = wait.until(ExpectedConditions.elementToBeClickable(byElement));
 
         if(elem.getRect().width < 1 || elem.getRect().height < 1) {
-//        if(element.getRect().width < 1 || element.getRect().height < 1) {
             log.debug("Size == 0, waiting ...");
 
             waitUntileSizeOfElementWillBeProper(byElement);
@@ -188,7 +191,6 @@ public class ExtendedBasePage {
 
             log.debug("Selector in getByFromElement: " + selector + ", value " + value);
             return getBy(selector, value);
-//            return/ by;
         }
         else {
             return getByFromNotInitializedElement(elementString);
@@ -232,13 +234,10 @@ public class ExtendedBasePage {
     }
 
     protected By getByFromNotInitializedElement(String element) {
-        // todo
-        // " Proxy element for: DefaultElementLocator 'By.xpath: //span[@class='close']'"
         String[] array = element.split("DefaultElementLocator '");
         if(array.length != 2) {
             return null;
         }
-        // "By.xpath: //span[@class='close']'"
         array = array[1].split(":");
 
         if(array.length != 2) {
@@ -251,7 +250,6 @@ public class ExtendedBasePage {
             String[] selectors = selector.split("\\.");
             selector = selectors[1];
         }
-
 
         String value = array[1].trim();
         value = value.substring(0,value.length() - 1);
