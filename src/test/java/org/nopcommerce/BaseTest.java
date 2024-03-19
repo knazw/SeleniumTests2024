@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.nopcommerce.helpers.FileOperations;
 import org.nopcommerce.model.Product;
 import org.nopcommerce.model.ShippingMethod;
@@ -19,14 +20,30 @@ public class BaseTest {
     MainPage mainPage;
 
     @BeforeEach
-    void setup() {
-        mainPage = new MainPage("chrome");
+    void setup(TestInfo info) {
+        String browserName = getBrowser(info.getDisplayName());
+
+        if(browserName == null) {
+            mainPage = new MainPage("chrome");
+        }
+        else {
+            mainPage = new MainPage(browserName);
+        }
         mainPage.getDriver().manage().window().maximize();
     }
 
     @AfterEach
     void tearDown() {
         mainPage.quit();
+    }
+
+    protected String getBrowser(String input) {
+        // [number] chrome, [number] firefox
+        String[] array = input.split("] ");
+        if(array.length == 2) {
+            return array[1];
+        }
+        return null;
     }
 
     protected static User createUser() {

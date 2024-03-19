@@ -1,6 +1,8 @@
 package org.nopcommerce;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.nopcommerce.model.Product;
 import org.nopcommerce.model.ShippingMethod;
 import org.nopcommerce.model.User;
@@ -14,20 +16,6 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class ComplexScenarioTests extends BaseTest{
 
     static final Logger log = getLogger(lookup().lookupClass());
-
-    MainPage mainPage;
-
-    @BeforeEach
-    void setup() {
-        mainPage = new MainPage("chrome");
-        mainPage.getDriver().manage().window().maximize();
-    }
-
-    @AfterEach
-    void tearDown() {
-        mainPage.quit();
-    }
-
 
     @Test
     @Timeout(180)
@@ -91,9 +79,11 @@ public class ComplexScenarioTests extends BaseTest{
         Assertions.assertEquals(shippingMethod.getShippingAddressFull(), shippingAddress);
     }
 
-    @Test
+
     @Timeout(180)
-    public void registerUserAndOrder() {
+    @ParameterizedTest
+    @ValueSource(strings = {"chrome", "firefox", "edge"})
+    public void registerUserAndOrder(String browser) {
         // ARRANGE
         User user = createUser();
         Product product = createProduct();
