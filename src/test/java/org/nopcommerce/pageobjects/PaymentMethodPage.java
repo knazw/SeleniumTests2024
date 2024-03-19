@@ -38,7 +38,9 @@ public class PaymentMethodPage extends ExtendedBasePage implements IHasHeaderUpp
     }
 
     public PaymentMethodPage clickCreditCard() {
-        click(creditCard);
+//        click(creditCard);
+        clickWithWait(creditCard, 10);
+        log.debug("clickCreditCard previously was failing");
 
         return this;
     }

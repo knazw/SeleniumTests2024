@@ -1,12 +1,19 @@
 package org.example.pageobjects;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.HasDevTools;
+import org.openqa.selenium.devtools.v122.network.Network;
+import org.openqa.selenium.devtools.v122.network.model.ConnectionType;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 
+import java.io.File;
 import java.time.Duration;
+import java.util.Optional;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -32,10 +39,10 @@ public class ExtendedBasePage {
         log.debug("ExtendedBasePage {}", browser);
 
         driver = WebDriverManager.getInstance(browser).create();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         log.debug("page load timeout: "+driver.manage().timeouts().getPageLoadTimeout().toString());
-        /*
+
         try {
             DevTools devTools = ((HasDevTools) driver).getDevTools();
             devTools.createSession();
@@ -43,7 +50,7 @@ public class ExtendedBasePage {
             devTools.send(Network.emulateNetworkConditions(
                     false,
                     0,
-                    16 * 1024,
+                    64 * 1024,
                     64 * 1024,
                     Optional.of(ConnectionType.CELLULAR2G)
             ));
@@ -52,7 +59,7 @@ public class ExtendedBasePage {
             e.printStackTrace();
             driver.quit();
         }
-        */
+
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
     }
@@ -71,7 +78,7 @@ public class ExtendedBasePage {
         driver.get(url);
 
         log.debug("page load timeout: "+driver.manage().timeouts().getPageLoadTimeout().toString());
-        /*
+
         try {
             DevTools devTools = ((HasDevTools) driver).getDevTools();
             devTools.createSession();
@@ -79,7 +86,7 @@ public class ExtendedBasePage {
             devTools.send(Network.emulateNetworkConditions(
                     false,
                     0,
-                    8 * 1024,
+                    64 * 1024,
                     64 * 1024,
                     Optional.of(ConnectionType.CELLULAR2G)
             ));
@@ -88,25 +95,40 @@ public class ExtendedBasePage {
             e.printStackTrace();
             driver.quit();
         }
-        */
+
     }
     public WebElement find(By element) {
         return driver.findElement(element);
     }
 
+    public WebElement findWithWait(By byItem, long seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+
+        return wait.until(ExpectedConditions.elementToBeClickable(byItem));
+    }
     public void click(WebElement element) {
         element.click();
     }
 
+    public void clickWithWait(WebElement element, long seconds) {
+        By byItem = getByFromElement(element.toString());
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+
+        WebElement foundElement = wait.until(ExpectedConditions.elementToBeClickable(byItem));
+        click(foundElement);
+    }
+
     public void clickWithWaits(WebElement element) {
 
-        By byElement = getByFromElement(element);
+        By byElement = getByFromElement(element.toString());
 
-        new WebDriverWait(driver, Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofMillis(250))
-                .until(ExpectedConditions.elementToBeClickable(byElement));
+        Wait<WebDriver> wait1 = new WebDriverWait(driver, Duration.ofSeconds(15))
+                .pollingEvery(Duration.ofMillis(250));
+        WebElement elem = wait1.until(ExpectedConditions.elementToBeClickable(byElement));
 
-        if(element.getRect().width < 1 || element.getRect().height < 1) {
+        if(elem.getRect().width < 1 || elem.getRect().height < 1) {
+//        if(element.getRect().width < 1 || element.getRect().height < 1) {
             log.debug("Size == 0, waiting ...");
 
             waitUntileSizeOfElementWillBeProper(byElement);
@@ -154,16 +176,27 @@ public class ExtendedBasePage {
             }});
     }
 
-    protected By getByFromElement(WebElement element) {
+    protected By getByFromElement(String elementString) {
 
         By by;
-        log.debug("element.toString().split(\"->\"): "+element.toString());
-        String[] selectorWithValue= (element.toString().split("->")[1].replaceFirst("(?s)(.*)\\]", "$1" + "")).split(":");
+        log.debug("elementString.toString().split(\"->\"): "+elementString);
+        if(elementString.contains("->")) {
+            String[] selectorWithValue = (elementString.split("->")[1].replaceFirst("(?s)(.*)\\]", "$1" + "")).split(":");
 
-        String selector = selectorWithValue[0].trim();
-        String value = selectorWithValue[1].trim();
+            String selector = selectorWithValue[0].trim();
+            String value = selectorWithValue[1].trim();
 
-        log.debug("Selector in getByFromElement: "+selector + ", value "+value);
+            log.debug("Selector in getByFromElement: " + selector + ", value " + value);
+            return getBy(selector, value);
+//            return/ by;
+        }
+        else {
+            return getByFromNotInitializedElement(elementString);
+        }
+    }
+
+    private static By getBy(String selector, String value) {
+        By by;
         switch (selector) {
             case "id":
                 by = By.id(value);
@@ -196,5 +229,47 @@ public class ExtendedBasePage {
                 throw new IllegalStateException("locator : " + selector + " not found!!!");
         }
         return by;
+    }
+
+    protected By getByFromNotInitializedElement(String element) {
+        // todo
+        // " Proxy element for: DefaultElementLocator 'By.xpath: //span[@class='close']'"
+        String[] array = element.split("DefaultElementLocator '");
+        if(array.length != 2) {
+            return null;
+        }
+        // "By.xpath: //span[@class='close']'"
+        array = array[1].split(":");
+
+        if(array.length != 2) {
+            return null;
+        }
+
+        String selector = array[0];
+
+        if(selector.contains(".")) {
+            String[] selectors = selector.split("\\.");
+            selector = selectors[1];
+        }
+
+
+        String value = array[1].trim();
+        value = value.substring(0,value.length() - 1);
+
+        return  getBy(selector, value);
+    }
+
+    public static void takeSnapShot(WebDriver webdriver,String fileWithPath) {
+
+        try {
+            TakesScreenshot scrShot = ((TakesScreenshot) webdriver);
+            File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
+
+            File DestFile = new File(fileWithPath);
+            FileUtils.copyFile(SrcFile, DestFile);
+        }
+        catch (Exception ex) {
+            log.error(ex.toString());
+        }
     }
 }

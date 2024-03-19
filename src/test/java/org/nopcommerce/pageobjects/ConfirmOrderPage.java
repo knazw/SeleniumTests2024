@@ -33,7 +33,7 @@ public class ConfirmOrderPage extends ExtendedBasePage implements IHasHeaderUppe
     }
 
     public CheckoutCompletedPage clickConfirmOrder() {
-        click(confirmOrder);
+        clickWithWait(confirmOrder, 10);
 
         return new CheckoutCompletedPage(driver);
     }

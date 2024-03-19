@@ -3,13 +3,20 @@ package org.nopcommerce.pageobjects;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pagefragments.HeaderUpper;
 import org.nopcommerce.pagefragments.MenuItems;
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
 import org.slf4j.Logger;
+
+import java.time.Duration;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -62,7 +69,10 @@ public class BillingPage extends ExtendedBasePage implements IHasHeaderUpper, IH
     }
 
     public BillingPage setCity(String cityName) {
-        type(city, cityName);
+        By byItem = getByFromElement(city.toString());
+        WebElement foundCity = findWithWait(byItem, 10);
+        type(foundCity, cityName);
+//        type(city, cityName);
 
         return this;
     }
@@ -99,5 +109,18 @@ public class BillingPage extends ExtendedBasePage implements IHasHeaderUpper, IH
     @Override
     public MenuItems getMenuItemsFragment() {
         return new MenuItems(driver);
+    }
+
+    public BillingPage waitUntilBillingAddressIsInteractable() {
+        Wait<WebDriver> fluentWait = new FluentWait<>(driver)
+                .pollingEvery(Duration.ofSeconds(1))
+                .withTimeout(Duration.ofSeconds(10))
+                .ignoring(ElementNotInteractableException.class);
+
+        By byCity = getByFromElement(city.toString());
+
+        fluentWait.until(ExpectedConditions.elementToBeClickable(byCity));
+
+        return this;
     }
 }

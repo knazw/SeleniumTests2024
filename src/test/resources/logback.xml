@@ -9,11 +9,11 @@
 
     <logger name="io.github.bonigarcia" level="DEBUG" />
     <logger name="io" level="WARN" />
-    <logger name="org" level="DEBUG" />
+    <logger name="org.nopcommerce" level="DEBUG" />
     <logger name="com" level="WARN" />
     <logger name="org.example" level="DEBUG" />
 
-    <root level="INFO">
+    <root level="ERROR">
         <appender-ref ref="STDOUT" />
     </root>
 

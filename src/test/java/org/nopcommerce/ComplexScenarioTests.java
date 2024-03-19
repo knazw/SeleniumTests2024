@@ -79,9 +79,11 @@ public class ComplexScenarioTests extends BaseTest{
                 .moveBackToColor()
                 .openShippingDetails();
 
-        mainPage = shippingDetailsPage.selectCountry(shippingMethod.country)
+        shippingDetailsPage = shippingDetailsPage.selectCountry(shippingMethod.country)
                 .setPostalCode(shippingMethod.postalCode)
-                .checkRadioButtonShippingMethod(shippingMethod.shippingMethod)
+                .shippingMethodAvailable();
+        shippingDetailsPage = new ShippingDetailsPage(mainPage.getDriver());
+        shippingDetailsPage.checkRadioButtonShippingMethod(shippingMethod.shippingMethod)
                 .applyShippingMethod();
 
         String shippingAddress = products.getShippingAddress();
@@ -137,10 +139,14 @@ public class ComplexScenarioTests extends BaseTest{
                 .moveBackToColor()
                 .openShippingDetails();
 
-        mainPage = shippingDetailsPage.selectCountry(shippingMethod.country)
+//        mainPage =
+        mainPage =  shippingDetailsPage.selectCountry(shippingMethod.country)
                 .setPostalCode(shippingMethod.postalCode)
+//                .shippingMethodAvailable()
                 .checkRadioButtonShippingMethod(shippingMethod.shippingMethod)
                 .applyShippingMethod();
+//        mainPage = shippingDetailsPage.checkRadioButtonShippingMethod(shippingMethod.shippingMethod)
+//                .applyShippingMethod();
 
         String shippingAddress = products.getShippingAddress();
 
@@ -153,7 +159,9 @@ public class ComplexScenarioTests extends BaseTest{
         BillingPage billingPage = cartPage.clickAgreement()
                 .clickCheckout();
 
-        ShippingMethodPage shippingMethodPage = billingPage.setCity(user.city)
+        ShippingMethodPage shippingMethodPage = billingPage
+//                .waitUntilBillingAddressIsInteractable()
+                .setCity(user.city)
                 .setCountry(user.country)
                 .setAddress1(user.address)
                 .postalCode(user.postalCode)

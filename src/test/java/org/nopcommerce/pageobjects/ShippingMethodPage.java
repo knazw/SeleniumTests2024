@@ -10,6 +10,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 
+import java.time.Duration;
+
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -37,7 +39,9 @@ public class ShippingMethodPage extends ExtendedBasePage implements IHasHeaderUp
     }
 
     public ShippingMethodPage clickShippingMethod() {
-        click(shippingMethod);
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        click(shippingMethod);
+        clickWithWait(shippingMethod, 10);
 
         return this;
     }
