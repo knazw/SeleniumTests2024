@@ -72,7 +72,6 @@ public class BillingPage extends ExtendedBasePage implements IHasHeaderUpper, IH
         By byItem = getByFromElement(city.toString());
         WebElement foundCity = findWithWait(byItem, 10);
         type(foundCity, cityName);
-//        type(city, cityName);
 
         return this;
     }
