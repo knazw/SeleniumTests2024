@@ -139,7 +139,6 @@ public class ComplexScenarioTests extends BaseTest{
                 .moveBackToColor()
                 .openShippingDetails();
 
-//        mainPage =
         mainPage =  shippingDetailsPage.selectCountry(shippingMethod.country)
                 .setPostalCode(shippingMethod.postalCode)
                 .checkRadioButtonShippingMethod(shippingMethod.shippingMethod)
