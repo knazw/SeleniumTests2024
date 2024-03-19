@@ -57,8 +57,6 @@ public class PaymentInfoPage extends ExtendedBasePage implements IHasHeaderUpper
 
         type(foundCardholderName, name);
 
-//        type(cardholderName, name);
-
         return this;
     }
 
@@ -81,15 +79,11 @@ public class PaymentInfoPage extends ExtendedBasePage implements IHasHeaderUpper
         return this;
     }
 
-
     public ConfirmOrderPage clickContinueButton() {
         click(continueButton);
 
         return new ConfirmOrderPage(driver);
     }
-
-
-
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
