@@ -142,11 +142,8 @@ public class ComplexScenarioTests extends BaseTest{
 //        mainPage =
         mainPage =  shippingDetailsPage.selectCountry(shippingMethod.country)
                 .setPostalCode(shippingMethod.postalCode)
-//                .shippingMethodAvailable()
                 .checkRadioButtonShippingMethod(shippingMethod.shippingMethod)
                 .applyShippingMethod();
-//        mainPage = shippingDetailsPage.checkRadioButtonShippingMethod(shippingMethod.shippingMethod)
-//                .applyShippingMethod();
 
         String shippingAddress = products.getShippingAddress();
 
@@ -160,7 +157,6 @@ public class ComplexScenarioTests extends BaseTest{
                 .clickCheckout();
 
         ShippingMethodPage shippingMethodPage = billingPage
-//                .waitUntilBillingAddressIsInteractable()
                 .setCity(user.city)
                 .setCountry(user.country)
                 .setAddress1(user.address)
