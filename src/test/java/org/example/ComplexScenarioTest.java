@@ -7,7 +7,6 @@ import org.example.pageobjects.BankPage;
 import org.example.pageobjects.TransactionDetailPage;
 import org.example.pageobjects.NewTransactionPage;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;

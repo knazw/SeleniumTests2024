@@ -8,7 +8,7 @@ import org.example.pageobjects.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
-import org.nopcommerce.pageobjects.MainPage;
+
 
 import static org.utilities.BaseTestHelpers.getBrowser;
 

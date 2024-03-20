@@ -3,7 +3,6 @@ package org.example.pageobjects;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.HasDevTools;
@@ -12,7 +11,6 @@ import org.openqa.selenium.devtools.v122.network.model.ConnectionType;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 
@@ -228,7 +226,6 @@ public class ExtendedBasePage {
 
     protected By getByFromElement(String elementString) {
 
-        By by;
         log.debug("elementString.toString().split(\"->\"): "+elementString);
         if(elementString.contains("->")) {
             String[] selectorWithValue = (elementString.split("->")[1].replaceFirst("(?s)(.*)\\]", "$1" + "")).split(":");
