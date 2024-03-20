@@ -155,7 +155,7 @@ public class BankPage extends ExtendedBasePage {
     }
 
     public void clickMineTransactions() {
-            click(mineTransactions);
+        clickWithWait(mineTransactions,10);
     }
 
     public void clickNewTransaction() {

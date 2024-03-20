@@ -82,7 +82,7 @@ public class ComplexScenarioTests extends BaseTest{
 
     @Timeout(180)
     @ParameterizedTest
-    @ValueSource(strings = {"chrome", "firefox", "edge"})
+    @ValueSource(strings = {"chrome", "firefox", "edge", "chromeheadless", "firefoxheadless"})
     public void registerUserAndOrder(String browser) {
         // ARRANGE
         User user = createUser();
