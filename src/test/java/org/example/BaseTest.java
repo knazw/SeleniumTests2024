@@ -7,21 +7,34 @@ import org.example.model.User;
 import org.example.pageobjects.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+
+
+import static org.utilities.BaseTestHelpers.getBrowser;
 
 public class BaseTest {
 
     LoginPage loginPage;
 
     @BeforeEach
-    void setup() {
+    void setup(TestInfo info) {
         removeTestData();
-        loginPage = new LoginPage("chrome");
+        String browserName = getBrowser(info.getDisplayName());
+
+        if(browserName == null) {
+            loginPage = new LoginPage("chrome");
+        }
+        else {
+            loginPage = new LoginPage(browserName);
+        }
         loginPage.getDriver().manage().window().maximize();
     }
 
     @AfterEach
     void tearDown() {
+
         loginPage.quit();
+        removeTestData();
     }
 
     protected void removeTestData() {

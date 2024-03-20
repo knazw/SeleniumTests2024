@@ -1,6 +1,8 @@
 package org.nopcommerce;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.nopcommerce.model.User;
 import org.nopcommerce.pageobjects.LoginPage;
 import org.nopcommerce.pageobjects.MyAccountPage;
@@ -21,8 +23,10 @@ public class RegisterTests extends BaseTest{
         createUser();
     }
 
-    @Test
-    public void createUserAndLogin() {
+//    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"chrome", "firefox", "edge", "safari", "chromium", "opera"})
+    public void createUserAndLogin(String browser) {
         // ARRANGE
         User user = createUser();
 

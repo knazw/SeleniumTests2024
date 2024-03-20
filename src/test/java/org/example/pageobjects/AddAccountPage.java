@@ -18,7 +18,7 @@ public class AddAccountPage extends ExtendedBasePage {
     }
 
     public CreateBankAccountPage skipPage() {
-        click(nextButton);
+        clickWithWait(nextButton, 10);
         return new CreateBankAccountPage(driver);
     }
 

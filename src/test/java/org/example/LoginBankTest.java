@@ -4,6 +4,8 @@ import org.example.model.*;
 import org.example.pageobjects.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
 
 import static java.lang.invoke.MethodHandles.lookup;
@@ -26,8 +28,10 @@ public class LoginBankTest extends BaseTest {
         assertThat(loginPage.failureBoxIsPresent()).isTrue();
     }
 
-    @Test
-    void shouldCreateUserAndLogout() {
+    @ParameterizedTest
+    @ValueSource(strings = {"firefox", "edge", "chromeheadless", "firefoxheadless", "edgeheadless"})
+//    @ValueSource(strings = {"edge"})
+    void shouldCreateUserAndLogout(String browser) {
         // ARRANGE
         User user = createUser1();
 
