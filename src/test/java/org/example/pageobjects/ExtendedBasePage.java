@@ -3,11 +3,16 @@ package org.example.pageobjects;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.HasDevTools;
 import org.openqa.selenium.devtools.v122.network.Network;
 import org.openqa.selenium.devtools.v122.network.model.ConnectionType;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 
@@ -38,7 +43,8 @@ public class ExtendedBasePage {
     public ExtendedBasePage(String browser) {
         log.debug("ExtendedBasePage {}", browser);
 
-        driver = WebDriverManager.getInstance(browser).create();
+
+        driver = createDriver(browser);
 //        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         log.debug("page load timeout: "+driver.manage().timeouts().getPageLoadTimeout().toString());
@@ -64,6 +70,47 @@ public class ExtendedBasePage {
 
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
+    }
+
+    protected WebDriver createDriver(String browser) {
+        WebDriver driver;
+        switch (browser) {
+            case "chrome":
+            case "edge":
+            case "firefox": {
+                driver = WebDriverManager.getInstance(browser).create();
+                break;
+            }
+            case "chromeheadless" : {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--headless=new");
+
+                driver = WebDriverManager.getInstance("chrome").capabilities(options)
+                        .create();
+                break;
+            }
+            case "firefoxheadless" : {
+
+                FirefoxOptions options = new FirefoxOptions();
+                options.addArguments("--headless");
+
+                driver = WebDriverManager.getInstance("firefox").capabilities(options)
+                        .create();
+                break;
+            }
+            case "edgeheadless" : {
+                EdgeOptions options = new EdgeOptions();
+                options.addArguments("--headless=new");
+                driver = WebDriverManager.getInstance("edge").capabilities(options)
+                        .create();
+                break;
+            }
+            default: {
+                driver = WebDriverManager.getInstance("chrome").create();
+            }
+        }
+
+        return driver;
     }
 
     public void setTimeoutSec(int timeoutSec) {

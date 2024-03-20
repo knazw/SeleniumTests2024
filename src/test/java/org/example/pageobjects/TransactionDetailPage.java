@@ -26,6 +26,10 @@ public class TransactionDetailPage extends ExtendedBasePage {
     @CacheLookup
     List<WebElement> transactionReceiver;
 
+    @FindBy(css = "input[data-test*='transaction-comment-input-']")
+    @CacheLookup
+    WebElement commentField;
+
 
     public TransactionDetailPage(WebDriver driver) {
         super(driver);
@@ -37,6 +41,9 @@ public class TransactionDetailPage extends ExtendedBasePage {
     }
 
     public String getSender(int index) {
+        By byItem = getByFromElement(commentField.toString());
+        findWithWait(byItem, 10);
+
         return transactionSender.get(index).getText();
     }
 

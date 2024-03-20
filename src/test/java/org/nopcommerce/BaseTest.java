@@ -16,6 +16,8 @@ import org.nopcommerce.pageobjects.MainPage;
 
 import java.time.LocalDate;
 
+import static org.utilities.BaseTestHelpers.getBrowser;
+
 public class BaseTest {
     MainPage mainPage;
 
@@ -37,14 +39,7 @@ public class BaseTest {
         mainPage.quit();
     }
 
-    protected String getBrowser(String input) {
-        // [number] chrome, [number] firefox
-        String[] array = input.split("] ");
-        if(array.length == 2) {
-            return array[1];
-        }
-        return null;
-    }
+
 
     protected static User createUser() {
 
