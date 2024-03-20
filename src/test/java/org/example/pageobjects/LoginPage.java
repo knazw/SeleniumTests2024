@@ -1,8 +1,11 @@
 package org.example.pageobjects;
 
 import org.example.model.User;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -50,6 +53,9 @@ public class LoginPage extends ExtendedBasePage {
     }
 
     public AddAccountPage withUserForTheFirstTime(User user) {
+        By byItem = getByFromElement(usernameInput.toString());
+        findWithWait(byItem, 10);
+
         type(usernameInput, user.username);
         type(passwordInput, user.password);
         click(signInButton);
@@ -64,8 +70,13 @@ public class LoginPage extends ExtendedBasePage {
     }
 
     public CreateUserPage createUser() {
+        Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
+        log.debug("Browser Name is : "+cap.getBrowserName());
+
         click(createUserLink);
-        click(createUserLink);
+        if(!cap.getBrowserName().equals("firefox")) {
+            click(createUserLink);
+        }
         return new CreateUserPage(this.driver);
     }
 
@@ -74,6 +85,9 @@ public class LoginPage extends ExtendedBasePage {
     }
 
     public boolean signInTextIsPresent() {
+        By byItem = getByFromElement(signInText.toString());
+        findWithWait(byItem, 10);
+
         return signInText.isDisplayed();
     }
 

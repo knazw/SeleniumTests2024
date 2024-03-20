@@ -7,7 +7,8 @@ import org.example.pageobjects.BankPage;
 import org.example.pageobjects.TransactionDetailPage;
 import org.example.pageobjects.NewTransactionPage;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
 
 import java.text.DecimalFormat;
@@ -20,8 +21,9 @@ public class ComplexScenarioTest extends BaseTest {
     static final Logger log = getLogger(lookup().lookupClass());
 
 
-    @Test
-    void shouldBeAbleToFilterTransactions() {
+    @ParameterizedTest
+    @ValueSource(strings = {"chrome","firefox", "edge"})
+    void shouldBeAbleToFilterTransactions(String browser) {
         // ARRANGE
         User user = createUser1();
 
@@ -48,8 +50,9 @@ public class ComplexScenarioTest extends BaseTest {
 
     }
 
-    @Test
-    void acceptPaymentAndCheck() {
+    @ParameterizedTest
+    @ValueSource(strings = {"chrome", "firefox", "edge"})
+    void acceptPaymentAndCheck(String browser) {
         // ARRANGE
         User user1 = createUser1();
         User user2 = createUser2();
