@@ -12,6 +12,7 @@
     <logger name="org.nopcommerce" level="DEBUG" />
     <logger name="com" level="WARN" />
     <logger name="org.example" level="DEBUG" />
+    <logger name="org.utilities" level="DEBUG" />
 
     <root level="ERROR">
         <appender-ref ref="STDOUT" />

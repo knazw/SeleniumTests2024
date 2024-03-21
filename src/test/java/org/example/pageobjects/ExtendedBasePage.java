@@ -300,18 +300,4 @@ public class ExtendedBasePage {
 
         return  getBy(selector, value);
     }
-
-    public static void takeSnapShot(WebDriver webdriver,String fileWithPath) {
-
-        try {
-            TakesScreenshot scrShot = ((TakesScreenshot) webdriver);
-            File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
-
-            File DestFile = new File(fileWithPath);
-            FileUtils.copyFile(SrcFile, DestFile);
-        }
-        catch (Exception ex) {
-            log.error(ex.toString());
-        }
-    }
 }

@@ -8,11 +8,19 @@ import org.example.pageobjects.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.utilities.BaseTestHelpers;
 
+import java.util.Optional;
 
 import static org.utilities.BaseTestHelpers.getBrowser;
 
+//@ExtendWith(RunnerExtension.class)
 public class BaseTest {
+
+
 
     LoginPage loginPage;
 
@@ -36,6 +44,26 @@ public class BaseTest {
         loginPage.quit();
         removeTestData();
     }
+
+
+    protected void makeScreenshotAfterFail() {
+        String fileName = BaseTestHelpers.createFileNameFromCurrentTime(null,null);
+
+        BaseTestHelpers.takeSnapShot(loginPage.getDriver(), "C:\\src\\selenium\\_screenshots\\"+fileName+".png");
+    }
+
+    @RegisterExtension
+    AfterTestExecutionCallback afterTestExecutionCallback = new AfterTestExecutionCallback() {
+        @Override
+        public void afterTestExecution(ExtensionContext context) throws Exception {
+            Optional<Throwable> exception = context.getExecutionException();
+            if (exception.isPresent()) { // has exception
+                makeScreenshotAfterFail();
+            } else {                     // no exception
+            }
+        }
+    };
+
 
     protected void removeTestData() {
         RestAssured.given()

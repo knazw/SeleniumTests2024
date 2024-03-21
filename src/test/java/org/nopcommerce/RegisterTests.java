@@ -23,9 +23,8 @@ public class RegisterTests extends BaseTest{
         createUser();
     }
 
-//    @Test
     @ParameterizedTest
-    @ValueSource(strings = {"chrome", "firefox", "edge", "safari", "chromium", "opera"})
+    @ValueSource(strings = {"chrome", "firefox", "edge", "safari", "chromium", "opera", "chromeheadless", "firefoxheadless", "edgeheadless"})
     public void createUserAndLogin(String browser) {
         // ARRANGE
         User user = createUser();
