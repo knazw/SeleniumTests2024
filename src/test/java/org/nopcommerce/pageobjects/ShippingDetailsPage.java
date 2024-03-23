@@ -89,6 +89,11 @@ public class ShippingDetailsPage extends ExtendedBasePage {
     public MainPage applyShippingMethod() {
         clickWithWaits(buttonApply);
 
+        By byItem = By.xpath("//div[@class='mfp-content']");
+        WebElement popupWhichShouldDissapear = driver.findElement(byItem);
+
+        waitUntilElementWillBeNotDisplayed(popupWhichShouldDissapear);
+
         return new MainPage(driver);
     }
 

@@ -125,7 +125,7 @@ public class ComplexScenarioTests extends BaseTest{
         String tooltipText = products.getStyleTooltip();
         Assertions.assertEquals("Fresh", tooltipText);
 
-        ShippingDetailsPage shippingDetailsPage = products.clickStyle(1)
+        ShippingDetailsPage shippingDetailsPage = products.clickStyle(1)  // hide tooltip
                 .moveBackToColor()
                 .openShippingDetails();
 
@@ -139,6 +139,7 @@ public class ComplexScenarioTests extends BaseTest{
         Assertions.assertEquals(shippingMethod.getShippingAddressFull(), shippingAddress);
 
         // ACT
+        products = new Products(products.getDriver()); // refresh references
         products.addToCart().getAddedToCartPopup().closePopup();
         mainPage.getHeaderUpperPage().mouseOverCartLabel();
         CartPage cartPage = products.getCartFloatingWindow().clickCart();

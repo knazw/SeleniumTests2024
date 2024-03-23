@@ -8,17 +8,31 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.nopcommerce.helpers.FileOperations;
 import org.nopcommerce.model.Product;
 import org.nopcommerce.model.ShippingMethod;
 import org.nopcommerce.model.User;
 import org.nopcommerce.pageobjects.MainPage;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.utilities.BaseTestHelpers;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Optional;
+import java.util.function.Consumer;
 
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.slf4j.LoggerFactory.getLogger;
 import static org.utilities.BaseTestHelpers.getBrowser;
 
 public class BaseTest {
+
+    static final Logger log = getLogger(lookup().lookupClass());
     MainPage mainPage;
 
     @BeforeEach
@@ -39,6 +53,59 @@ public class BaseTest {
         mainPage.quit();
     }
 
+    protected void makeScreenshotAfterFail(String name) {
+        String fileName = BaseTestHelpers.createFileNameFromCurrentTime(name+"-failed",null);
+
+        BaseTestHelpers.takeSnapShot(mainPage.getDriver(), "C:\\src\\selenium\\_screenshots\\"+fileName+".png");
+    }
+
+    @RegisterExtension
+    AfterTestExecutionCallback afterTestExecutionCallback = new AfterTestExecutionCallback() {
+        @Override
+        public void afterTestExecution(ExtensionContext context) throws Exception {
+            Optional<Throwable> exception = context.getExecutionException();
+            if (exception.isPresent()) { // has exception
+                makeScreenshotAfterFail(context.getTestMethod().get().getName());
+            } else {                     // no exception
+            }
+        }
+    };
+
+    public static WebElement findNotStaleElement(WebDriver driver, By byItem) {
+        return new WebDriverWait(driver, Duration.ofSeconds(10))
+                .ignoring(StaleElementReferenceException.class)
+                .pollingEvery(Duration.ofSeconds(1))
+                .until((WebDriver d) -> {
+                    WebElement element = d.findElement(byItem);
+                    try {
+                        Rectangle rect = element.getRect();
+                    }
+                    catch (StaleElementReferenceException staleElementReferenceException) {
+                        log.error(staleElementReferenceException.toString());
+                        throw staleElementReferenceException;
+                    }
+                    return element;
+                });
+    }
+
+    public static boolean performActionOnWebElement(WebDriver driver,
+                                                    WebElement element, By byItem, Consumer<WebElement> action, int maxQuantity) {
+        boolean result = false;
+        int counter = 0;
+        while(counter++ < maxQuantity) {
+            try {
+                action.accept(element);
+                result = true;
+
+                break;
+            }
+            catch (StaleElementReferenceException staleElementReferenceException) {
+                element = driver.findElement(byItem);
+            }
+        }
+
+        return result;
+    }
 
 
     protected static User createUser() {

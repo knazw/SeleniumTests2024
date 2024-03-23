@@ -8,9 +8,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
+import java.time.Duration;
 import java.util.List;
 
 import static java.lang.invoke.MethodHandles.lookup;
@@ -130,6 +133,23 @@ public class Products extends ExtendedBasePage implements IHasHeaderUpper, IHasM
 
 
     public String getShippingAddress() {
+        By byItem = getByFromElement(shippingAddress.toString());
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofSeconds(1))
+                .ignoring(Exception.class)
+                .until(new ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver d) {
+                        WebElement webElement = d.findElement(byItem);
+                        if(webElement.getText() != null && webElement.getText().length() > 0) {
+                            return true;
+                        }
+
+
+                        return false;
+                    }
+                });
+
+
         return shippingAddress.getText();
     }
 

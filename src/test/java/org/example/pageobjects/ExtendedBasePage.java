@@ -11,6 +11,7 @@ import org.openqa.selenium.devtools.v122.network.model.ConnectionType;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 
@@ -197,10 +198,20 @@ public class ExtendedBasePage {
     }
 
     public void moveToElemenent(WebElement element) {
-        Actions action = new Actions(driver);
+        Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
 
-        action.moveToElement(element);
-        action.perform();
+        if(cap.getBrowserName().startsWith("firefox")) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        }
+
+        Actions action = new Actions(driver);
+        action.moveToElement(element).perform();
+    }
+
+    public void waitUntilElementWillBeNotDisplayed(WebElement element) {
+        boolean value = new WebDriverWait(driver, Duration.ofSeconds(5))
+                .pollingEvery(Duration.ofSeconds(1))
+                .until(ExpectedConditions.invisibilityOf(element));
     }
 
     protected void waitUntileSizeOfElementWillBeProper(By byItem) {
