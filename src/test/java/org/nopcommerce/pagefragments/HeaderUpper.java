@@ -42,8 +42,7 @@ public class HeaderUpper extends ExtendedBasePage {
     }
 
     public HeaderUpper mouseOverCartLabel() {
-        Actions build = new Actions(driver);
-        build.moveToElement(cart).build().perform();
+        moveToElemenent(cart);
 
         return this;
     }

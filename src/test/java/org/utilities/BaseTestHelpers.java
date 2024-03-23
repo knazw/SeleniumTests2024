@@ -41,7 +41,7 @@ public class BaseTestHelpers {
     }
 
     public static String createFileNameFromCurrentTime(String prefix, String suffix) {
-        String value = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMdd-hhMMss"));
+        String value = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMdd-HHmmssSSS"));
         String result = "";
         if(prefix != null && prefix.length() > 0) {
             result = prefix + "-" + value;
