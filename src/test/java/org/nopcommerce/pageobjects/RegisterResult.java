@@ -23,10 +23,8 @@ public class RegisterResult extends ExtendedBasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void checkResult(String expected) {
-        String text = labelResult.getText();
-
-        Assertions.assertEquals(expected, text);
+    public String getRegistrationResult() {
+        return labelResult.getText();
     }
 
     public MainPage clickContinue() {
