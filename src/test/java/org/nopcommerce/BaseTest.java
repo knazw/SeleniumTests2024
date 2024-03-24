@@ -108,7 +108,7 @@ public class BaseTest {
     }
 
 
-    protected static User createUser() {
+    protected synchronized static User createUser() {
 
         String idString = FileOperations.readFromFile("user.json");
         ObjectMapper objectMapper = new ObjectMapper()

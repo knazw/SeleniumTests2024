@@ -41,7 +41,8 @@ public class ComplexScenarioTests extends BaseTest{
         registerPage.setCheckboxNewsletter(user.newsletter);
 
         RegisterResult registerResult = registerPage.clickRegister();
-        registerResult.checkResult("Your registration completed");
+        String registrationResult = registerResult.getRegistrationResult();
+        Assertions.assertEquals("Your registration completed", registrationResult);
 
         mainPage = registerResult.clickContinue();
 
@@ -105,7 +106,8 @@ public class ComplexScenarioTests extends BaseTest{
         registerPage.setCheckboxNewsletter(user.newsletter);
 
         RegisterResult registerResult = registerPage.clickRegister();
-        registerResult.checkResult("Your registration completed");
+        String registrationResult = registerResult.getRegistrationResult();
+        Assertions.assertEquals("Your registration completed", registrationResult);
 
         mainPage = registerResult.clickContinue();
 

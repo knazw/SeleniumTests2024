@@ -46,7 +46,8 @@ public class RegisterTests extends BaseTest{
 
         // ACT
         RegisterResult registerResult = registerPage.clickRegister();
-        registerResult.checkResult("Your registration completed");
+        String registrationResult = registerResult.getRegistrationResult();
+        Assertions.assertEquals("Your registration completed", registrationResult);
 
         mainPage = registerResult.clickContinue();
 
