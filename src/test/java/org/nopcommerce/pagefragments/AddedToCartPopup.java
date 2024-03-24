@@ -38,6 +38,6 @@ public class AddedToCartPopup extends ExtendedBasePage {
     }
 
     public void closePopup() {
-        clickWithWait(closePopup, 10);
+        clickWithWait(closePopup, 30);
     }
 }

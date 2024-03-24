@@ -46,8 +46,8 @@ public class BaseTest {
     }
 
 
-    protected void makeScreenshotAfterFail() {
-        String fileName = BaseTestHelpers.createFileNameFromCurrentTime(null,null);
+    protected void makeScreenshotAfterFail(String name) {
+        String fileName = BaseTestHelpers.createFileNameFromCurrentTime(name+"-failed",null);
 
         BaseTestHelpers.takeSnapShot(loginPage.getDriver(), "C:\\src\\selenium\\_screenshots\\"+fileName+".png");
     }
@@ -58,7 +58,7 @@ public class BaseTest {
         public void afterTestExecution(ExtensionContext context) throws Exception {
             Optional<Throwable> exception = context.getExecutionException();
             if (exception.isPresent()) { // has exception
-                makeScreenshotAfterFail();
+                makeScreenshotAfterFail(context.getTestMethod().get().getName());
             } else {                     // no exception
             }
         }
