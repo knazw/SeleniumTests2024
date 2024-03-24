@@ -1,6 +1,7 @@
 package org.example.pageobjects;
 
 import org.example.model.*;
+import org.nopcommerce.BaseTest;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.CacheLookup;
@@ -112,14 +113,15 @@ public class BankPage extends ExtendedBasePage {
     public PairOfIntegers changeValueOnASlider(double percentage) {
 
         Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofSeconds(10))
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofSeconds(1))
                 .ignoring(NoSuchElementException.class);
 
-        WebElement element = wait.until(ExpectedConditions
-                .elementToBeClickable(By.cssSelector("span[data-test='transaction-list-filter-amount-range-slider']")));
+        Rectangle rectangle = null;
+        By byItem = By.cssSelector("span[data-test='transaction-list-filter-amount-range-slider']");
 
-        Rectangle rectangle = element.getRect();
+        WebElement element = BaseTest.findNotStaleElement(driver, byItem);
+        rectangle = element.getRect();
 
         int x = rectangle.x;
         int y = rectangle.y + (rectangle.height / 2);
