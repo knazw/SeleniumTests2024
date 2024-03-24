@@ -3,6 +3,7 @@ package org.example;
 import org.example.model.*;
 import org.example.pageobjects.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -28,6 +29,8 @@ public class LoginBankTest extends BaseTest {
         assertThat(loginPage.failureBoxIsPresent()).isTrue();
     }
 
+    @Tag("Registration")
+    @Tag("Fast")
     @ParameterizedTest
     @ValueSource(strings = {"firefox", "edge", "chromeheadless", "firefoxheadless", "edgeheadless"})
 //    @ValueSource(strings = {"edge"})

@@ -17,6 +17,7 @@ public class ComplexScenarioTests extends BaseTest{
 
     static final Logger log = getLogger(lookup().lookupClass());
 
+    @Tag("Fast")
     @Test
     @Timeout(180)
     public void registerUserAndViewProduct() {
@@ -81,6 +82,7 @@ public class ComplexScenarioTests extends BaseTest{
     }
 
 
+    @Tag("Slow")
     @Timeout(180)
     @ParameterizedTest
     @ValueSource(strings = {"chrome", "firefox", "edge", "chromeheadless", "firefoxheadless"})

@@ -7,6 +7,7 @@ import org.example.pageobjects.BankPage;
 import org.example.pageobjects.TransactionDetailPage;
 import org.example.pageobjects.NewTransactionPage;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ public class ComplexScenarioTest extends BaseTest {
     static final Logger log = getLogger(lookup().lookupClass());
 
 
+    @Tag("Fast")
     @ParameterizedTest
     @ValueSource(strings = {"chrome","firefox", "edge"})
     void shouldBeAbleToFilterTransactions(String browser) {
@@ -50,6 +52,7 @@ public class ComplexScenarioTest extends BaseTest {
 
     }
 
+    @Tag("Slow")
     @ParameterizedTest
     @ValueSource(strings = {"chrome", "firefox", "edge"})
     void acceptPaymentAndCheck(String browser) {
