@@ -77,9 +77,9 @@ public class ExtendedBasePage {
             case "chrome":
             case "edge":
             case "firefox": {
-//                driver = WebDriverManager.getInstance(browser).create();
+                driver = WebDriverManager.getInstance(browser).create();
 //                driver = WebDriverManager.getInstance(browser).remoteAddress("http://192.168.1.1:4444/wd/hub").create();
-                driver = WebDriverManager.getInstance(browser).browserInDocker().create();
+//                driver = WebDriverManager.getInstance(browser).browserInDocker().create();
                 break;
             }
             case "chromeheadless" : {
