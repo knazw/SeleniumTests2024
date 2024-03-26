@@ -13,7 +13,8 @@ import org.slf4j.Logger;
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class RegisterTests extends BaseTest{
+
+public class RegistrationTests extends BaseTest{
 
     static final Logger log = getLogger(lookup().lookupClass());
 
