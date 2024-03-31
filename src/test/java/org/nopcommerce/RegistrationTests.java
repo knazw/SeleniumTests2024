@@ -24,7 +24,6 @@ public class RegistrationTests extends BaseTest{
         createUser();
     }
 
-    @Tag("Registration")
     @Tag("Fast")
     @ParameterizedTest
     @ValueSource(strings = {"chrome", "firefox", "edge", "chromeheadless", "firefoxheadless", "edgeheadless"})

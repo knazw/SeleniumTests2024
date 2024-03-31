@@ -42,12 +42,17 @@ public class LoginPage extends ExtendedBasePage {
     }
 
     public LoginPage(String browser, int timeoutSec) {
-        this(browser);
+        this(browser, null);
         setTimeoutSec(timeoutSec);
     }
 
     public LoginPage(String browser) {
         super(browser);
+    }
+
+    public LoginPage(String browser, String remoteAddress) {
+        super(browser);
+        remoteAddressField = remoteAddress;
         PageFactory.initElements(driver, this);
         visit("http://localhost:3000");
     }
