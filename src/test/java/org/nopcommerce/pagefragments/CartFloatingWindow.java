@@ -1,5 +1,6 @@
 package org.nopcommerce.pagefragments;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pageobjects.CartPage;
 import org.openqa.selenium.By;
@@ -27,8 +28,14 @@ public class CartFloatingWindow extends ExtendedBasePage {
     WebElement cart;
 
 
+    /*
     public CartFloatingWindow(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public CartFloatingWindow(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -41,6 +48,7 @@ public class CartFloatingWindow extends ExtendedBasePage {
     public CartPage clickCart() {
         clickWithWait(cart, 10);
 
-        return new CartPage(driver);
+        return new CartPage(webDriverManager);
+        //return new CartPage(driver);
     }
 }

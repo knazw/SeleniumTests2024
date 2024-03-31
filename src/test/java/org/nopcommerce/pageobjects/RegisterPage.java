@@ -1,5 +1,6 @@
 package org.nopcommerce.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -58,8 +59,14 @@ public class RegisterPage extends ExtendedBasePage {
     @CacheLookup
     WebElement buttonRegister;
 
+    /*
     public RegisterPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public RegisterPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -118,6 +125,7 @@ public class RegisterPage extends ExtendedBasePage {
     public RegisterResult clickRegister() {
         click(buttonRegister);
 
-        return new RegisterResult(driver);
+        return new RegisterResult(webDriverManager);
+        //return new RegisterResult(driver);
     }
 }

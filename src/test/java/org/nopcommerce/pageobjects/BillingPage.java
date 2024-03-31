@@ -1,5 +1,6 @@
 package org.nopcommerce.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pagefragments.HeaderUpper;
 import org.nopcommerce.pagefragments.MenuItems;
@@ -50,8 +51,14 @@ public class BillingPage extends ExtendedBasePage implements IHasHeaderUpper, IH
     @CacheLookup
     WebElement continueButton;
 
+    /*
     public BillingPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public BillingPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -97,17 +104,22 @@ public class BillingPage extends ExtendedBasePage implements IHasHeaderUpper, IH
     public ShippingMethodPage clickContinueButton(){
         click(continueButton);
 
-        return new ShippingMethodPage(driver);
+        return new ShippingMethodPage(webDriverManager);
+        //return new ShippingMethodPage(driver);
     }
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
-        return new HeaderUpper(driver);
+
+        return new HeaderUpper(webDriverManager);
+//        return new HeaderUpper(driver);
     }
 
     @Override
     public MenuItems getMenuItemsFragment() {
-        return new MenuItems(driver);
+
+        return new MenuItems(webDriverManager);
+//        return new MenuItems(driver);
     }
 
     public BillingPage waitUntilBillingAddressIsInteractable() {

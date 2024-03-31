@@ -1,5 +1,6 @@
 package org.nopcommerce.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pagefragments.HeaderUpper;
 import org.nopcommerce.pagefragments.MenuItems;
@@ -20,11 +21,16 @@ public class CheckoutCompletedPage extends ExtendedBasePage implements IHasHeade
     @CacheLookup
     WebElement orderDetails;
 
+    /*
     public CheckoutCompletedPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
-
+    */
+    public CheckoutCompletedPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
+        PageFactory.initElements(driver, this);
+    }
     public CheckoutCompletedPage(String browser) {
         super(browser);
         PageFactory.initElements(driver, this);
@@ -34,17 +40,22 @@ public class CheckoutCompletedPage extends ExtendedBasePage implements IHasHeade
     public OrderDetailsPage clickOrderDetailsLink() {
         clickWithWait(orderDetails, 10);
 
-        return new OrderDetailsPage(driver);
+        return new OrderDetailsPage(webDriverManager);
+        //return new OrderDetailsPage(driver);
     }
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
-        return new HeaderUpper(driver);
+
+        return new HeaderUpper(webDriverManager);
+        //return new HeaderUpper(driver);
     }
 
     @Override
     public MenuItems getMenuItemsFragment() {
-        return new MenuItems(driver);
+
+        return new MenuItems(webDriverManager);
+//        return new MenuItems(driver);
     }
 
 }

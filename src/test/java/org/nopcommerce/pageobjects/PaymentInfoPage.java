@@ -1,5 +1,6 @@
 package org.nopcommerce.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pagefragments.HeaderUpper;
 import org.nopcommerce.pagefragments.MenuItems;
@@ -40,8 +41,14 @@ public class PaymentInfoPage extends ExtendedBasePage implements IHasHeaderUpper
     WebElement continueButton;
 
 
+    /*
     public PaymentInfoPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public PaymentInfoPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -82,16 +89,21 @@ public class PaymentInfoPage extends ExtendedBasePage implements IHasHeaderUpper
     public ConfirmOrderPage clickContinueButton() {
         click(continueButton);
 
-        return new ConfirmOrderPage(driver);
+        return new ConfirmOrderPage(webDriverManager);
+        //return new ConfirmOrderPage(driver);
     }
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
-        return new HeaderUpper(driver);
+
+        return new HeaderUpper(webDriverManager);
+        //return new HeaderUpper(driver);
     }
 
     @Override
     public MenuItems getMenuItemsFragment() {
-        return new MenuItems(driver);
+
+        return new MenuItems(webDriverManager);
+//        return new MenuItems(driver);
     }
 }

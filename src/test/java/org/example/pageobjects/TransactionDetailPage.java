@@ -1,5 +1,6 @@
 package org.example.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -31,8 +32,14 @@ public class TransactionDetailPage extends ExtendedBasePage {
     WebElement commentField;
 
 
+    /*
     public TransactionDetailPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public TransactionDetailPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 

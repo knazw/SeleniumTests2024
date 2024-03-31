@@ -147,7 +147,7 @@ public class ComplexScenarioTest extends BaseTest {
         bankPage.clickHome();
 
         // to avoid staleElementException
-        bankPage = new BankPage(bankPage.getDriver());
+        bankPage = new BankPage(bankPage.getWebDriverManager());
         bankPage.clickMineTransactions();
 
 

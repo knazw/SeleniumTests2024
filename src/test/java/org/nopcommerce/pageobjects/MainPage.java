@@ -1,5 +1,6 @@
 package org.nopcommerce.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pagefragments.HeaderUpper;
 import org.nopcommerce.pagefragments.MenuItems;
@@ -25,12 +26,21 @@ public class MainPage extends ExtendedBasePage implements IHasHeaderUpper, IHasM
     @CacheLookup
     WebElement iconLogin;
 
+    /*
     public MainPage(WebDriver driver) {
+//        super();
+
         super(driver);
         PageFactory.initElements(driver, this);
     }
+    */
 
-    public MainPage(String browser) {
+    public MainPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
+        PageFactory.initElements(driver, this);
+    }
+
+    public MainPage(String browser, String remoteAddress) {
         super(browser);
         PageFactory.initElements(driver, this);
         visit("https://demo.nopcommerce.com/");
@@ -39,22 +49,28 @@ public class MainPage extends ExtendedBasePage implements IHasHeaderUpper, IHasM
     public RegisterPage clickRegister() {
         click(iconRegister);
 
-        return new RegisterPage(driver);
+        return new RegisterPage(webDriverManager);
+//        return new RegisterPage(driver);
     }
 
     public LoginPage clickLogin() {
         clickWithWaits(iconLogin);
 
-        return new LoginPage(driver);
+        return new LoginPage(webDriverManager);
+        //return new LoginPage(driver);
     }
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
-        return new HeaderUpper(driver);
+
+        return new HeaderUpper(webDriverManager);
+        //return new HeaderUpper(driver);
     }
 
     @Override
     public MenuItems getMenuItemsFragment() {
-        return new MenuItems(driver);
+
+        return new MenuItems(webDriverManager);
+        //return new MenuItems(driver);
     }
 }

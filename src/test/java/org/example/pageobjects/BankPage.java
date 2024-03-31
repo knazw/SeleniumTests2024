@@ -1,5 +1,6 @@
 package org.example.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.model.*;
 import org.nopcommerce.BaseTest;
 import org.openqa.selenium.*;
@@ -85,8 +86,14 @@ public class BankPage extends ExtendedBasePage {
     @CacheLookup
     WebElement homeLink;
 
+    /*
     public BankPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public BankPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -107,7 +114,8 @@ public class BankPage extends ExtendedBasePage {
     public LoginPage logout() {
         click(logoutButton);
 
-        return new LoginPage(driver);
+        return new LoginPage(webDriverManager);
+        //return new LoginPage(driver);
     }
 
     public PairOfIntegers changeValueOnASlider(double percentage) {
@@ -192,7 +200,8 @@ public class BankPage extends ExtendedBasePage {
             click(transactionCreateSubmitPayment);
         }
 
-        return new NewTransactionPage(driver);
+        return new NewTransactionPage(webDriverManager);
+        //return new NewTransactionPage(driver);
     }
 
     public int findTransactionOnMineTransactionList(User user, Transaction transaction, String userTransaction) {
@@ -239,7 +248,8 @@ public class BankPage extends ExtendedBasePage {
     public TransactionDetailPage acceptNthTransactions(int index) {
         click(transactionItem.get(index));
 
-        return new TransactionDetailPage(driver);
+        return new TransactionDetailPage(webDriverManager);
+        //return new TransactionDetailPage(driver);
     }
 
     public int getTransactionsItemSize() {

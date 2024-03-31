@@ -1,5 +1,6 @@
 package org.nopcommerce.pagefragments;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pageobjects.*;
 import org.openqa.selenium.By;
@@ -57,8 +58,14 @@ public class Products extends ExtendedBasePage implements IHasHeaderUpper, IHasM
     @CacheLookup
     WebElement addToCart;
 
+    /*
     public Products(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public Products(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -72,13 +79,15 @@ public class Products extends ExtendedBasePage implements IHasHeaderUpper, IHasM
         WebElement el = driver.findElement(By.linkText("Shoes"));
         el.click();
 
-        return new Products(driver);
+        return new Products(webDriverManager);
+//        return new Products(driver);
     }
 
     public Products selectNthProductOnPage(int productNumber) {
         click(productsTitles.get(productNumber));
 
-        return new Products(driver);
+        return new Products(webDriverManager);
+//        return new Products(driver);
     }
 
     public Products selectSize(int size) {
@@ -99,7 +108,8 @@ public class Products extends ExtendedBasePage implements IHasHeaderUpper, IHasM
     public Products moveToStyle(int position) {
         moveToElemenent(selectStyle.get(position));
 
-        return new Products(driver);
+        return new Products(webDriverManager);
+//        return new Products(driver);
     }
 
 
@@ -132,7 +142,8 @@ public class Products extends ExtendedBasePage implements IHasHeaderUpper, IHasM
     public ShippingDetailsPage openShippingDetails() {
         clickWithWaits(shippingDetails);
 
-        return new ShippingDetailsPage(driver);
+        return new ShippingDetailsPage(webDriverManager);
+        //return new ShippingDetailsPage(driver);
     }
 
 
@@ -160,12 +171,16 @@ public class Products extends ExtendedBasePage implements IHasHeaderUpper, IHasM
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
-        return new HeaderUpper(driver);
+
+        return new HeaderUpper(webDriverManager);
+        //return new HeaderUpper(driver);
     }
 
     @Override
     public MenuItems getMenuItemsFragment() {
-        return new MenuItems(driver);
+
+        return new MenuItems(webDriverManager);
+//        return new MenuItems(driver);
     }
 
     public Products addToCart() {
@@ -176,11 +191,15 @@ public class Products extends ExtendedBasePage implements IHasHeaderUpper, IHasM
 
     @Override
     public CartFloatingWindow getCartFloatingWindow() {
-        return new CartFloatingWindow(driver);
+
+        return new CartFloatingWindow(webDriverManager);
+        //return new CartFloatingWindow(driver);
     }
 
     @Override
     public AddedToCartPopup getAddedToCartPopup() {
-        return new AddedToCartPopup(driver);
+
+        return new AddedToCartPopup(webDriverManager);
+//        return new AddedToCartPopup(driver);
     }
 }

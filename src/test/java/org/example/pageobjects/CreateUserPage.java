@@ -34,8 +34,14 @@ public class CreateUserPage extends ExtendedBasePage {
     WebElement buttonSignUp;
 
 
+    /*
     public CreateUserPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public CreateUserPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -57,7 +63,9 @@ public class CreateUserPage extends ExtendedBasePage {
         type(passwordInput, user.password);
         type(confirmPasswordInput, user.password);
         click(buttonSignUp);
-        return new LoginPage(driver);
+
+        return new LoginPage(webDriverManager);
+//        return new LoginPage(driver);
     }
 
 }

@@ -1,5 +1,6 @@
 package org.example.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -12,14 +13,22 @@ public class AddAccountPage extends ExtendedBasePage {
     @CacheLookup
     WebElement nextButton;
 
+    /*
     public AddAccountPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public AddAccountPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
     public CreateBankAccountPage skipPage() {
         clickWithWait(nextButton, 10);
-        return new CreateBankAccountPage(driver);
+
+        return new CreateBankAccountPage(webDriverManager);
+        //return new CreateBankAccountPage(driver);
     }
 
 }
