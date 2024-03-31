@@ -121,7 +121,6 @@ public class Products extends ExtendedBasePage implements IHasHeaderUpper, IHasM
     }
 
     public Products moveToOtherPartOfAScreen() {
-//        moveToElemenent(selectColor);
 
         Actions actions = new Actions(driver);
         actions.moveToLocation(0,0).build().perform();
