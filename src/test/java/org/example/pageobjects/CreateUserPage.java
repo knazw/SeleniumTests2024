@@ -1,5 +1,6 @@
 package org.example.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.model.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
