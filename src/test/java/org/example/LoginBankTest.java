@@ -29,7 +29,6 @@ public class LoginBankTest extends BaseTest {
         assertThat(loginPage.failureBoxIsPresent()).isTrue();
     }
 
-    @Tag("Registration")
     @Tag("Fast")
     @ParameterizedTest
     @ValueSource(strings = {"firefox", "edge", "chromeheadless", "firefoxheadless", "edgeheadless"})
