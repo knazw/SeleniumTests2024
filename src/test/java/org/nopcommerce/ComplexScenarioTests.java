@@ -66,7 +66,7 @@ public class ComplexScenarioTests extends BaseTest{
         Assertions.assertEquals("Fresh", tooltipText);
 
         ShippingDetailsPage shippingDetailsPage = products.clickStyle(1)
-                .moveBackToColor()
+                .moveToOtherPartOfAScreen()
                 .openShippingDetails();
 
         shippingDetailsPage = shippingDetailsPage.selectCountry(shippingMethod.country)
@@ -130,7 +130,7 @@ public class ComplexScenarioTests extends BaseTest{
         Assertions.assertEquals("Fresh", tooltipText);
 
         ShippingDetailsPage shippingDetailsPage = products.clickStyle(1)  // hide tooltip
-                .moveBackToColor()
+                .moveToOtherPartOfAScreen()
                 .openShippingDetails();
 
         mainPage =  shippingDetailsPage.selectCountry(shippingMethod.country)
