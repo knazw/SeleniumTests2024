@@ -26,21 +26,12 @@ public class MainPage extends ExtendedBasePage implements IHasHeaderUpper, IHasM
     @CacheLookup
     WebElement iconLogin;
 
-    /*
-    public MainPage(WebDriver driver) {
-//        super();
-
-        super(driver);
-        PageFactory.initElements(driver, this);
-    }
-    */
-
     public MainPage(WebDriverManager webDriverManager) {
         super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
-    public MainPage(String browser, String remoteAddress) {
+    public MainPage(String browser) {
         super(browser);
         PageFactory.initElements(driver, this);
         visit("https://demo.nopcommerce.com/");
@@ -50,27 +41,23 @@ public class MainPage extends ExtendedBasePage implements IHasHeaderUpper, IHasM
         click(iconRegister);
 
         return new RegisterPage(webDriverManager);
-//        return new RegisterPage(driver);
     }
 
     public LoginPage clickLogin() {
         clickWithWaits(iconLogin);
 
         return new LoginPage(webDriverManager);
-        //return new LoginPage(driver);
     }
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
 
         return new HeaderUpper(webDriverManager);
-        //return new HeaderUpper(driver);
     }
 
     @Override
     public MenuItems getMenuItemsFragment() {
 
         return new MenuItems(webDriverManager);
-        //return new MenuItems(driver);
     }
 }

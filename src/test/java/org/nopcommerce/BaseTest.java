@@ -20,10 +20,14 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.utilities.BaseTestHelpers;
+import org.utilities.PropertiesStorage;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.function.Consumer;
 
 import static java.lang.invoke.MethodHandles.lookup;
@@ -34,6 +38,23 @@ public class BaseTest {
 
     static final Logger log = getLogger(lookup().lookupClass());
     MainPage mainPage;
+
+    @BeforeAll
+    protected static void setupBeforeAll() {
+//        BaseTest.class.getClassLoader().getResourceAsStream("application.properties");
+
+        Properties properties = new Properties();
+        try (InputStream is = BaseTest.class.getClassLoader().getResourceAsStream("application.properties")) {
+            properties.load(is);
+
+            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance("");
+            propertiesStorage.setProperties(properties);
+        }
+        catch (IOException ioException) {
+            log.error(ioException.toString());
+        }
+
+    }
 
     @BeforeEach
     void setup(TestInfo info) {
@@ -50,7 +71,9 @@ public class BaseTest {
 
     @AfterEach
     void tearDown() {
-        mainPage.quit();
+        if(mainPage != null) {
+            mainPage.quit();
+        }
     }
 
     protected void makeScreenshotAfterFail(String name) {

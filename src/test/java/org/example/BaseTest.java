@@ -6,21 +6,47 @@ import org.example.model.BankAccount;
 import org.example.model.User;
 import org.example.pageobjects.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.slf4j.Logger;
 import org.utilities.BaseTestHelpers;
+import org.utilities.PropertiesStorage;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
+import java.util.Properties;
 
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.slf4j.LoggerFactory.getLogger;
 import static org.utilities.BaseTestHelpers.getBrowser;
 
 //@ExtendWith(RunnerExtension.class)
 public class BaseTest {
 
+    static final Logger log = getLogger(lookup().lookupClass());
 
+//    static String remoteAddress;
+
+    @BeforeAll
+    protected static void setupBeforeAll() {
+
+        Properties properties = new Properties();
+        try (InputStream is = org.nopcommerce.BaseTest.class.getClassLoader().getResourceAsStream("application.properties")) {
+            properties.load(is);
+
+            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance("");
+            propertiesStorage.setProperties(properties);
+        }
+        catch (IOException ioException) {
+            log.error(ioException.toString());
+        }
+
+    }
 
     LoginPage loginPage;
 

@@ -50,19 +50,15 @@ public class LoginPage extends ExtendedBasePage {
     }
 
     public LoginPage(String browser, int timeoutSec) {
-        this(browser, null);
+        super(browser);
         setTimeoutSec(timeoutSec);
     }
 
     public LoginPage(String browser) {
         super(browser);
-    }
-
-    public LoginPage(String browser, String remoteAddress) {
-        super(browser);
-        remoteAddressField = remoteAddress;
         PageFactory.initElements(driver, this);
         visit("http://localhost:3000");
+//        visit("http://172.17.0.1:3000");
     }
 
     public AddAccountPage withUserForTheFirstTime(User user) {
