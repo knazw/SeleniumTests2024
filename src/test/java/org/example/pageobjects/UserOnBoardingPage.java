@@ -1,5 +1,6 @@
 package org.example.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -12,13 +13,21 @@ public class UserOnBoardingPage extends ExtendedBasePage {
     @CacheLookup
     WebElement nextPageButton;
 
+    /*
     public UserOnBoardingPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public UserOnBoardingPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
     public BankPage clickNext() {
         click(nextPageButton);
-        return new BankPage(driver);
+
+        return new BankPage(webDriverManager);
+        //return new BankPage(driver);
     }
 }

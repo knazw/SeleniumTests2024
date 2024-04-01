@@ -1,5 +1,6 @@
 package org.nopcommerce.pagefragments;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pageobjects.MyAccountPage;
 import org.openqa.selenium.WebDriver;
@@ -24,8 +25,14 @@ public class HeaderUpper extends ExtendedBasePage {
     @CacheLookup
     WebElement cart;
 
+    /*
     public HeaderUpper(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public HeaderUpper(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -38,7 +45,8 @@ public class HeaderUpper extends ExtendedBasePage {
     public MyAccountPage clickMyAccount() {
         click(myAccountLink);
 
-        return new MyAccountPage(driver);
+        return new MyAccountPage(webDriverManager);
+        //return new MyAccountPage(driver);
     }
 
     public HeaderUpper mouseOverCartLabel() {

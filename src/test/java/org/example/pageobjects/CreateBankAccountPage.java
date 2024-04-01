@@ -1,5 +1,6 @@
 package org.example.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.model.BankAccount;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,8 +30,14 @@ public class CreateBankAccountPage extends ExtendedBasePage {
     @CacheLookup
     WebElement buttonSave;
 
+    /*
     public CreateBankAccountPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public CreateBankAccountPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -39,7 +46,9 @@ public class CreateBankAccountPage extends ExtendedBasePage {
         type(routingNumberInput, bankAccount.routingNumber);
         type(accountNumberInput, bankAccount.accountNr);
         click(buttonSave);
-        return new UserOnBoardingPage(driver);
+
+        return new UserOnBoardingPage(webDriverManager);
+        //return new UserOnBoardingPage(driver);
     }
 
 

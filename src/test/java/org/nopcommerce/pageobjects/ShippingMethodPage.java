@@ -1,5 +1,6 @@
 package org.nopcommerce.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pagefragments.HeaderUpper;
 import org.nopcommerce.pagefragments.MenuItems;
@@ -27,8 +28,14 @@ public class ShippingMethodPage extends ExtendedBasePage implements IHasHeaderUp
     @CacheLookup
     WebElement continueButton;
 
+    /*
     public ShippingMethodPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public ShippingMethodPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -49,16 +56,21 @@ public class ShippingMethodPage extends ExtendedBasePage implements IHasHeaderUp
     public PaymentMethodPage clickContinueButton() {
         click(continueButton);
 
-        return new PaymentMethodPage(driver);
+        return new PaymentMethodPage(webDriverManager);
+        //return new PaymentMethodPage(driver);
     }
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
-        return new HeaderUpper(driver);
+
+        return new HeaderUpper(webDriverManager);
+//        return new HeaderUpper(driver);
     }
 
     @Override
     public MenuItems getMenuItemsFragment() {
-        return new MenuItems(driver);
+
+        return new MenuItems(webDriverManager);
+//        return new MenuItems(driver);
     }
 }

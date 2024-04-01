@@ -1,23 +1,17 @@
 package org.example.pageobjects;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.HasDevTools;
-import org.openqa.selenium.devtools.v122.network.Network;
-import org.openqa.selenium.devtools.v122.network.model.ConnectionType;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
+import org.utilities.PropertiesStorage;
 
-import java.io.File;
 import java.time.Duration;
-import java.util.Optional;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -30,18 +24,30 @@ public class ExtendedBasePage {
         return driver;
     }
 
+    public WebDriverManager getWebDriverManager() {
+        return webDriverManager;
+    }
+
     protected WebDriver driver;
     protected WebDriverWait wait;
+
+    protected WebDriverManager webDriverManager;
     int timeoutSec = 5;
 
+    public ExtendedBasePage(WebDriverManager webDriverManagerParam) {
+        this.webDriverManager = webDriverManagerParam;
+        this.driver = this.webDriverManager.getWebDriver();
+    }
+
+    /*
     public ExtendedBasePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSec));
     }
+    */
 
     public ExtendedBasePage(String browser) {
         log.debug("ExtendedBasePage {}", browser);
-
 
         driver = createDriver(browser);
 //        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -72,22 +78,66 @@ public class ExtendedBasePage {
     }
 
     protected WebDriver createDriver(String browser) {
-        WebDriver driver;
+        webDriverManager = getBrowserInstance(browser);
+        webDriverManager = addRemoteAddress(webDriverManager, PropertiesStorage.getInstance("").getRemoteAddress());
+        webDriverManager = addInstanceInDocker(webDriverManager, PropertiesStorage.getInstance("").getInstanceInDocker());
+        webDriverManager = addVnc(webDriverManager, PropertiesStorage.getInstance("").getEnableVnc());
+        webDriverManager = addFramerate(webDriverManager, PropertiesStorage.getInstance("").getFramerate());
+        webDriverManager = addEnableRecording(webDriverManager, PropertiesStorage.getInstance("").getEnableRecording());
+
+        return webDriverManager.create();
+    }
+
+    private WebDriverManager addEnableRecording(WebDriverManager webDriverManager, boolean enableRecording) {
+        if(!enableRecording) {
+            return webDriverManager;
+        }
+        return webDriverManager.enableRecording();
+    }
+
+    private WebDriverManager addFramerate(WebDriverManager webDriverManager, int framerate) {
+        if(framerate <= 0) {
+            return webDriverManager;
+        }
+        return webDriverManager.dockerRecordingFrameRate(framerate);
+    }
+
+    private WebDriverManager addVnc(WebDriverManager webDriverManager, boolean enableVnc) {
+        if(!enableVnc) {
+            return webDriverManager;
+        }
+        return webDriverManager.enableVnc();
+    }
+
+    private WebDriverManager addInstanceInDocker(WebDriverManager webDriverManager, boolean instanceInDocker) {
+        if(!instanceInDocker) {
+            return webDriverManager;
+        }
+        return webDriverManager.browserInDocker();
+    }
+
+    private WebDriverManager addRemoteAddress(WebDriverManager webDriverManager, String remoteAddress) {
+        if(remoteAddress == null) {
+            return webDriverManager;
+        }
+        return webDriverManager.remoteAddress(remoteAddress);
+    }
+
+    private WebDriverManager getBrowserInstance(String browser) {
+        WebDriverManager webDriverManager = null;
         switch (browser) {
             case "chrome":
             case "edge":
             case "firefox": {
-                driver = WebDriverManager.getInstance(browser).create();
-//                driver = WebDriverManager.getInstance(browser).remoteAddress("http://192.168.1.1:4444/wd/hub").create();
-//                driver = WebDriverManager.getInstance(browser).browserInDocker().create();
+                webDriverManager = WebDriverManager.getInstance(browser);
+
                 break;
             }
             case "chromeheadless" : {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--headless=new");
 
-                driver = WebDriverManager.getInstance("chrome").capabilities(options)
-                        .create();
+                webDriverManager = WebDriverManager.getInstance("chrome").capabilities(options);
                 break;
             }
             case "firefoxheadless" : {
@@ -95,23 +145,20 @@ public class ExtendedBasePage {
                 FirefoxOptions options = new FirefoxOptions();
                 options.addArguments("--headless");
 
-                driver = WebDriverManager.getInstance("firefox").capabilities(options)
-                        .create();
+                webDriverManager = WebDriverManager.getInstance("firefox").capabilities(options);
                 break;
             }
             case "edgeheadless" : {
                 EdgeOptions options = new EdgeOptions();
                 options.addArguments("--headless=new");
-                driver = WebDriverManager.getInstance("edge").capabilities(options)
-                        .create();
+                webDriverManager = WebDriverManager.getInstance("edge").capabilities(options);
                 break;
             }
             default: {
-                driver = WebDriverManager.getInstance("chrome").create();
+                webDriverManager = WebDriverManager.getInstance("chrome");
             }
         }
-
-        return driver;
+        return webDriverManager;
     }
 
     public void setTimeoutSec(int timeoutSec) {
@@ -119,9 +166,14 @@ public class ExtendedBasePage {
     }
 
     public void quit() {
+        if(webDriverManager != null) {
+            webDriverManager.stopDockerRecording();
+            webDriverManager.quit();
+        }
         if(driver != null) {
             driver.quit();
         }
+
     }
 
     public void visit(String url) {

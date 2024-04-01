@@ -1,5 +1,6 @@
 package org.nopcommerce.pagefragments;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -26,8 +27,14 @@ public class AddedToCartPopup extends ExtendedBasePage {
     WebElement closePopup;
 
 
+    /*
     public AddedToCartPopup(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public AddedToCartPopup(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 

@@ -1,5 +1,6 @@
 package org.nopcommerce.pagefragments;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,8 +20,14 @@ public class MenuItems extends ExtendedBasePage {
     WebElement linkApparel;
 
 
+    /*
     public MenuItems(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public MenuItems(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -33,6 +40,6 @@ public class MenuItems extends ExtendedBasePage {
     public Products clickApparel() {
         click(linkApparel);
 
-        return new Products(driver);
+        return new Products(webDriverManager);
     }
 }

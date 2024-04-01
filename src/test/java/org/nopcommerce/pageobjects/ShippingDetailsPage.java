@@ -1,5 +1,6 @@
 package org.nopcommerce.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -40,8 +41,14 @@ public class ShippingDetailsPage extends ExtendedBasePage {
     @CacheLookup
     WebElement shippingBox;
 
+    /*
     public ShippingDetailsPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public ShippingDetailsPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -94,7 +101,8 @@ public class ShippingDetailsPage extends ExtendedBasePage {
 
         waitUntilElementWillBeNotDisplayed(popupWhichShouldDissapear);
 
-        return new MainPage(driver);
+        return new MainPage(webDriverManager);
+        //return new MainPage(driver);
     }
 
 

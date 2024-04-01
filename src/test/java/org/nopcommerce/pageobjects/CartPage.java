@@ -1,5 +1,6 @@
 package org.nopcommerce.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.nopcommerce.pagefragments.HeaderUpper;
 import org.nopcommerce.pagefragments.MenuItems;
@@ -25,8 +26,14 @@ public class CartPage extends ExtendedBasePage implements IHasHeaderUpper, IHasM
     @CacheLookup
     WebElement checkout;
 
+    /*
     public CartPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+    */
+    public CartPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -38,12 +45,16 @@ public class CartPage extends ExtendedBasePage implements IHasHeaderUpper, IHasM
 
     @Override
     public HeaderUpper getHeaderUpperPage() {
-        return new HeaderUpper(driver);
+
+        return new HeaderUpper(webDriverManager);
+//        return new HeaderUpper(driver);
     }
 
     @Override
     public MenuItems getMenuItemsFragment() {
-        return new MenuItems(driver);
+
+        return new MenuItems(webDriverManager);
+//        return new MenuItems(driver);
     }
 
     public CartPage clickAgreement() {
@@ -55,6 +66,7 @@ public class CartPage extends ExtendedBasePage implements IHasHeaderUpper, IHasM
     public BillingPage clickCheckout() {
         click(checkout);
 
-        return new BillingPage(driver);
+        return new BillingPage(webDriverManager);
+        //return new BillingPage(driver);
     }
 }

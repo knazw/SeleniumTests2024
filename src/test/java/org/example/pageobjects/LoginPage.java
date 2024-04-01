@@ -1,5 +1,6 @@
 package org.example.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.model.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
@@ -36,25 +37,28 @@ public class LoginPage extends ExtendedBasePage {
     @CacheLookup
     WebElement signInText;
 
+    /*
     public LoginPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
+    */
+    public LoginPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
+        this.webDriverManager = webDriverManager;
+        PageFactory.initElements(driver, this);
+    }
 
     public LoginPage(String browser, int timeoutSec) {
-        this(browser, null);
+        super(browser);
         setTimeoutSec(timeoutSec);
     }
 
     public LoginPage(String browser) {
         super(browser);
-    }
-
-    public LoginPage(String browser, String remoteAddress) {
-        super(browser);
-        remoteAddressField = remoteAddress;
         PageFactory.initElements(driver, this);
         visit("http://localhost:3000");
+//        visit("http://172.17.0.1:3000");
     }
 
     public AddAccountPage withUserForTheFirstTime(User user) {
@@ -64,14 +68,18 @@ public class LoginPage extends ExtendedBasePage {
         type(usernameInput, user.username);
         type(passwordInput, user.password);
         click(signInButton);
-        return new AddAccountPage(driver);
+
+        return new AddAccountPage(webDriverManager);
+        //return new AddAccountPage(driver);
     }
 
     public BankPage with(User user) {
         type(usernameInput, user.username);
         type(passwordInput, user.password);
         click(signInButton);
-        return new BankPage(driver);
+
+        return new BankPage(webDriverManager);
+        //return new BankPage(driver);
     }
 
     public CreateUserPage createUser() {
@@ -82,7 +90,9 @@ public class LoginPage extends ExtendedBasePage {
         if(!cap.getBrowserName().equals("firefox")) {
             click(createUserLink);
         }
-        return new CreateUserPage(this.driver);
+
+        return new CreateUserPage(webDriverManager);
+        //return new CreateUserPage(this.driver);
     }
 
     public boolean failureBoxIsPresent() {

@@ -1,5 +1,6 @@
 package org.nopcommerce.pageobjects;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,8 +22,14 @@ public class LoginPage extends ExtendedBasePage {
     @CacheLookup
     WebElement buttonLogin;
 
+    /*
     public LoginPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
+    }
+     */
+    public LoginPage(WebDriverManager webDriverManager) {
+        super(webDriverManager);
         PageFactory.initElements(driver, this);
     }
 
@@ -37,6 +44,7 @@ public class LoginPage extends ExtendedBasePage {
     public MainPage setButtonLogin() {
         click(buttonLogin);
 
-        return new MainPage(driver);
+        return new MainPage(webDriverManager);
+//        return new MainPage(driver);
     }
 }

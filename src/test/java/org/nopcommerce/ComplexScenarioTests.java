@@ -72,7 +72,7 @@ public class ComplexScenarioTests extends BaseTest{
         shippingDetailsPage = shippingDetailsPage.selectCountry(shippingMethod.country)
                 .setPostalCode(shippingMethod.postalCode)
                 .shippingMethodAvailable();
-        shippingDetailsPage = new ShippingDetailsPage(mainPage.getDriver());
+        shippingDetailsPage = new ShippingDetailsPage(mainPage.getWebDriverManager());
         shippingDetailsPage.checkRadioButtonShippingMethod(shippingMethod.shippingMethod)
                 .applyShippingMethod();
 
@@ -143,7 +143,7 @@ public class ComplexScenarioTests extends BaseTest{
         Assertions.assertEquals(shippingMethod.getShippingAddressFull(), shippingAddress);
 
         // ACT
-        products = new Products(products.getDriver()); // refresh references
+        products = new Products(products.getWebDriverManager()); // refresh references
         products.addToCart().getAddedToCartPopup().closePopup();
         mainPage.getHeaderUpperPage().mouseOverCartLabel();
         CartPage cartPage = products.getCartFloatingWindow().clickCart();
