@@ -128,8 +128,7 @@ public class BankPage extends ExtendedBasePage {
         Rectangle rectangle = null;
         By byItem = By.cssSelector("span[data-test='transaction-list-filter-amount-range-slider']");
 
-        WebElement element = BaseTest.findNotStaleElement(driver, byItem);
-        rectangle = element.getRect();
+        rectangle = BaseTest.findNotStaleRectangle(driver, byItem);
 
         int x = rectangle.x;
         int y = rectangle.y + (rectangle.height / 2);

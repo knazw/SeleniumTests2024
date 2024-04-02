@@ -112,6 +112,28 @@ public class BaseTest {
                 });
     }
 
+    public static Rectangle findNotStaleRectangle(WebDriver driver, By byItem) {
+
+        return new WebDriverWait(driver, Duration.ofSeconds(10))
+                .ignoring(StaleElementReferenceException.class)
+                .pollingEvery(Duration.ofSeconds(1))
+                .until((WebDriver d) -> {
+                    WebElement element = d.findElement(byItem);
+                    Rectangle rect = null;
+
+                    try {
+                        rect = element.getRect();
+                    }
+                    catch (StaleElementReferenceException staleElementReferenceException) {
+                        log.error(staleElementReferenceException.toString());
+                        throw staleElementReferenceException;
+                    }
+                    return rect;
+                });
+
+    }
+
+
     public static boolean performActionOnWebElement(WebDriver driver,
                                                     WebElement element, By byItem, Consumer<WebElement> action, int maxQuantity) {
         boolean result = false;
