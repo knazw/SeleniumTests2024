@@ -22,12 +22,10 @@ public final class PropertiesStorage {
 
     private static volatile PropertiesStorage instance;
 
-    public String value;
+    private PropertiesStorage() {
 
-    private PropertiesStorage(String value) {
-        this.value = value;
     }
-    public static PropertiesStorage getInstance(String value) {
+    public static PropertiesStorage getInstance() {
         PropertiesStorage result = instance;
 
         if(result != null) {
@@ -36,7 +34,7 @@ public final class PropertiesStorage {
 
         synchronized (PropertiesStorage.class) {
             if(instance == null) {
-                instance = new PropertiesStorage(value);
+                instance = new PropertiesStorage();
             }
             return instance;
         }

@@ -29,7 +29,7 @@ public class FileOperations {
         String data = "";
 
         try {
-            File file = new File("user.json");
+            File file = new File(fileName);
             InputStream inputStream = new FileInputStream(file);
             data = readFromInputStream(inputStream);
         }
