@@ -104,6 +104,8 @@ public class RegistrationSteps extends BaseTest {
 
         this.stepsData.UsersIdMap = users;
         this.stepsData.currentUser = user;
+
+        FileOperations.writeToFile(users, filename);
     }
 
     @And("User {string} is on register page")
@@ -165,30 +167,4 @@ public class RegistrationSteps extends BaseTest {
         Assertions.assertEquals(this.stepsData.currentUser.lastName, lastName);
         Assertions.assertEquals(this.stepsData.currentUser.email, email);
     }
-
-
-    /*
-            // ACT
-        RegisterResult registerResult = registerPage.clickRegister();
-        String registrationResult = registerResult.getRegistrationResult();
-        Assertions.assertEquals("Your registration completed", registrationResult);
-
-        mainPage = registerResult.clickContinue();
-
-        LoginPage loginPage = mainPage.clickLogin();
-        loginPage.setTextBoxEmail(user.email);
-        loginPage.setTextBoxPassword(user.password);
-        mainPage = loginPage.setButtonLogin();
-
-        // ASSERT
-
-        MyAccountPage myAccountPage = mainPage.getHeaderUpperPage().clickMyAccount();
-        String firstName = myAccountPage.getFirstName();
-        String lastName = myAccountPage.getLastName();
-        String email = myAccountPage.getEmail();
-
-        Assertions.assertEquals(user.firstName, firstName);
-        Assertions.assertEquals(user.lastName, lastName);
-        Assertions.assertEquals(user.email, email);
-     */
 }
