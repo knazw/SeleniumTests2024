@@ -79,11 +79,11 @@ public class ExtendedBasePage {
 
     protected WebDriver createDriver(String browser) {
         webDriverManager = getBrowserInstance(browser);
-        webDriverManager = addRemoteAddress(webDriverManager, PropertiesStorage.getInstance("").getRemoteAddress());
-        webDriverManager = addInstanceInDocker(webDriverManager, PropertiesStorage.getInstance("").getInstanceInDocker());
-        webDriverManager = addVnc(webDriverManager, PropertiesStorage.getInstance("").getEnableVnc());
-        webDriverManager = addFramerate(webDriverManager, PropertiesStorage.getInstance("").getFramerate());
-        webDriverManager = addEnableRecording(webDriverManager, PropertiesStorage.getInstance("").getEnableRecording());
+        webDriverManager = addRemoteAddress(webDriverManager, PropertiesStorage.getInstance().getRemoteAddress());
+        webDriverManager = addInstanceInDocker(webDriverManager, PropertiesStorage.getInstance().getInstanceInDocker());
+        webDriverManager = addVnc(webDriverManager, PropertiesStorage.getInstance().getEnableVnc());
+        webDriverManager = addFramerate(webDriverManager, PropertiesStorage.getInstance().getFramerate());
+        webDriverManager = addEnableRecording(webDriverManager, PropertiesStorage.getInstance().getEnableRecording());
 
         return webDriverManager.create();
     }

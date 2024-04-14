@@ -38,7 +38,7 @@ import static org.utilities.BaseTestHelpers.getBrowser;
 public class BaseTest {
 
     static final Logger log = getLogger(lookup().lookupClass());
-    MainPage mainPage;
+    protected MainPage mainPage;
 
     @BeforeAll
     protected static void setupBeforeAll() {
@@ -48,7 +48,7 @@ public class BaseTest {
         try (InputStream is = BaseTest.class.getClassLoader().getResourceAsStream("application.properties")) {
             properties.load(is);
 
-            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance("");
+            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance();
             propertiesStorage.setProperties(properties);
         }
         catch (IOException ioException) {
@@ -200,7 +200,7 @@ public class BaseTest {
     }
 
 
-    private static String changeEmail(String email) {
+    protected static String changeEmail(String email) {
         String[] split = email.split("@");
         return (Integer.parseInt(split[0]) + 1) + "@" + split[1];
     }

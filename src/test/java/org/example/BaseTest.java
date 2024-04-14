@@ -39,7 +39,7 @@ public class BaseTest {
         try (InputStream is = org.nopcommerce.BaseTest.class.getClassLoader().getResourceAsStream("application.properties")) {
             properties.load(is);
 
-            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance("");
+            PropertiesStorage propertiesStorage = PropertiesStorage.getInstance();
             propertiesStorage.setProperties(properties);
         }
         catch (IOException ioException) {
