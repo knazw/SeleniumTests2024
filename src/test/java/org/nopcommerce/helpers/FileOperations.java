@@ -57,6 +57,17 @@ public class FileOperations {
         return resultStringBuilder.toString();
     }
 
+    public static void writeToFile(Object object, String fileName) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JSR310Module());
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        try {
+            objectMapper.writeValue(new File(fileName), object);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void writeToFile(User user) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JSR310Module());
@@ -67,30 +78,4 @@ public class FileOperations {
             throw new RuntimeException(e);
         }
     }
-
-    /*
-
-    public User read() throws IOException, ClassNotFoundException {
-        User previousUser = convertJsonToPOJO("user.json", User.class);
-        return previousUser;
-    }
-
-    public static <T> T convertJsonToPOJO(String filePath, Class<?> target) throws IOException, ClassNotFoundException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File(filePath), objectMapper .getTypeFactory().constructCollectionType(List.class, Class.forName(target.getName())));
-    }
-
-    public class JsonResponse<T> {
-        public T getResult() {
-            return result;
-        }
-
-        public void setResult(T result) {
-            this.result = result;
-        }
-
-        private T result;
-
-    }
-    */
 }
