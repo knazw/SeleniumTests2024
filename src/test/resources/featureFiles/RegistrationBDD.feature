@@ -1,4 +1,4 @@
-Feature: First feature file with scenarios
+Feature: Registration feature file with scenarios
 
 
   Scenario Outline: Correct user is able to create an account without transformer
