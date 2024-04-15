@@ -186,7 +186,7 @@ public class BaseTest {
         user.country = "Poland";
         user.phoneNumber = "89274234";
 
-        FileOperations.writeToFile(user);
+        FileOperations.writeToFile(user, "user.json");
 
         return user;
     }

@@ -100,7 +100,7 @@ public class RegistrationSteps extends BaseTest {
         User user = users.get(username);
         user.email = changeEmail(users.get(username).email);
 
-        FileOperations.writeToFile(user);
+        FileOperations.writeToFile(user, filename);
 
         this.stepsData.UsersIdMap = users;
         this.stepsData.currentUser = user;
@@ -156,7 +156,7 @@ public class RegistrationSteps extends BaseTest {
         this.stepsData.mainPage = this.stepsData.loginPage.setButtonLogin();
     }
 
-    @And("Correct data are stored in user page")
+    @And("Correct data are displayed in user page")
     public void CorrectDataAreStoredInUserPage() {
         this.stepsData.myAccountPage = mainPage.getHeaderUpperPage().clickMyAccount();
         String firstName = this.stepsData.myAccountPage.getFirstName();

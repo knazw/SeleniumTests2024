@@ -67,15 +67,4 @@ public class FileOperations {
             throw new RuntimeException(e);
         }
     }
-
-    public static void writeToFile(User user) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JSR310Module());
-        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        try {
-            objectMapper.writeValue(new File("user.json"), user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
