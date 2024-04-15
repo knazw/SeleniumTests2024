@@ -9,7 +9,7 @@ Feature: First feature file with scenarios
     Then Process ends with a sentence "Your registration completed"
     And User clicks continue button
     And User "<userId>" is able to login on login page with login and password
-    And Correct data are stored in user page
+    And Correct data are displayed in user page
   Examples:
     | fileName   | userId       |
     | users.json | basicAccount |
