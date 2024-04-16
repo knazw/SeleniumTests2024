@@ -20,5 +20,13 @@ public class StepsData {
     public MyAccountPage myAccountPage;
     public Products products;
     public ShippingDetailsPage shippingDetailsPage;
+    public CartPage cartPage;
+    public BillingPage billingPage;
+    public ShippingMethodPage shippingMethodPage;
+    public PaymentMethodPage paymentMethodPage;
+    public PaymentInfoPage paymentInfoPage;
+    public ConfirmOrderPage confirmOrderPage;
+    public CheckoutCompletedPage checkoutCompletedPage;
+    public OrderDetailsPage orderDetailsPage;
 
 }
