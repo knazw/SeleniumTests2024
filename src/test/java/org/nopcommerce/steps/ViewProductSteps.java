@@ -122,16 +122,5 @@ public class ViewProductSteps {
         String baseText = "to "+country + ", "+postalCode + " via "+shippingMethod;
         Assertions.assertEquals(baseText, this.stepsData.obtainedText);
     }
-    /*
-//    And User moves mouse to other part of a screen
-//    And User opens shipping details
-//    And User selects country "<country>"
-//    And User selects postal code <postal code>
-//    And User waits for displayed shipping methods
-//    And User chooses "<shipping method>"
-//    And User applies shipping method
-//    And It is possible to read shipping address
-    And Read address is equal to choosen address "<country>", <postal code> and "<shipping method>"
-     */
 
 }
