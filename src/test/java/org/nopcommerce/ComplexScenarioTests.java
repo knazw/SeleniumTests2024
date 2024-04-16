@@ -15,6 +15,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class ComplexScenarioTests extends BaseTest{
 
+    // todo: remove this class, it is replaced by gherkin file
+    // the only plus: easily test with different browsers can be performed.
     static final Logger log = getLogger(lookup().lookupClass());
 
     @Tag("Fast")
