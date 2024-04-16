@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,18 +27,21 @@ public class BaseTestHelpers {
         return null;
     }
 
-    public static void takeSnapShot(WebDriver webdriver, String fileWithPath) {
+    public static byte[] takeSnapShot(WebDriver webdriver, String fileWithPath) {
 
         try {
             TakesScreenshot scrShot = ((TakesScreenshot) webdriver);
-            File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
+            byte[] fileBytes = scrShot.getScreenshotAs(OutputType.BYTES);
 
-            File DestFile = new File(fileWithPath);
-            FileUtils.copyFile(SrcFile, DestFile);
+            File destFile = new File(fileWithPath);
+
+            Files.write(destFile.toPath(), fileBytes);
+            return fileBytes;
         }
         catch (Exception ex) {
             log.error(ex.toString());
         }
+        return null;
     }
 
     public static String createFileNameFromCurrentTime(String prefix, String suffix) {

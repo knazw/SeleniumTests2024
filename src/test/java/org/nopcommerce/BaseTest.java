@@ -77,10 +77,10 @@ public class BaseTest {
         }
     }
 
-    protected void makeScreenshotAfterFail(String name) {
+    protected byte[] makeScreenshotAfterFail(String name) {
         String fileName = BaseTestHelpers.createFileNameFromCurrentTime(name+"-failed",null);
 
-        BaseTestHelpers.takeSnapShot(mainPage.getDriver(), "C:\\src\\selenium\\_screenshots\\"+fileName+".png");
+        return BaseTestHelpers.takeSnapShot(mainPage.getDriver(), "C:\\src\\selenium\\_screenshots\\"+fileName+".png");
     }
 
     @RegisterExtension
