@@ -13,3 +13,18 @@ Feature: Registration feature file with scenarios
   Examples:
     | fileName   | userId       |
     | users.json | basicAccount |
+
+
+    Scenario: Failing scenario for screenshot
+      Given Failing step with probability 10 %
+
+  Scenario Outline: Second failing scenario for screenshot
+    Given following user "<userId>" from "<fileName>"
+    And User "<userId>" is on register page
+    And User fills all fields on registration page
+    When User presses the register button
+    Then Process ends with a sentence "Your registration completed"
+    And Failing step
+    Examples:
+      | fileName   | userId       |
+      | users.json | basicAccount |

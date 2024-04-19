@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -37,8 +38,10 @@ public class RegistrationSteps extends BaseTest {
     public void takeScreenshotOnFailure(Scenario scenario) {
         log.debug("\n\n\n============take screenshot============\n\n\n");
 
+        //scenario.attach();
         if(scenario.isFailed()) {
-            makeScreenshotAfterFail(scenario.getName());
+            byte[] bytes = makeScreenshotAfterFail(scenario.getName());
+            scenario.attach(bytes, "image/png", "attachment 00");
         }
     }
 
@@ -166,5 +169,14 @@ public class RegistrationSteps extends BaseTest {
         Assertions.assertEquals(this.stepsData.currentUser.firstName, firstName);
         Assertions.assertEquals(this.stepsData.currentUser.lastName, lastName);
         Assertions.assertEquals(this.stepsData.currentUser.email, email);
+    }
+
+    @Given("Failing step with probability {int} %")
+    public void FailingStep(int probability) {
+        Random random = new Random(System.currentTimeMillis());
+
+        if(random.nextInt(100) <= probability) {
+            Assertions.assertTrue(false);
+        }
     }
 }

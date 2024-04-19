@@ -53,7 +53,7 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-    jvmArgs = listOf(
-            "-javaagent:${agent.singleFile}"
-    )
+//    jvmArgs = listOf(
+//            "-javaagent:${agent.singleFile}"
+//    )
 }
