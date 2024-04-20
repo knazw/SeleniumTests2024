@@ -18,7 +18,8 @@ public class RegistrationTests extends BaseTest{
 
     static final Logger log = getLogger(lookup().lookupClass());
 
-    // todo: remove it
+    // todo: remove this class, it is replaced by gherkin file
+    // the only plus: easily test with different browsers can be performed.
 
     public void write() {
         createUser();
