@@ -8,6 +8,7 @@ Feature: Registration feature file with scenarios
     When User presses the register button
     Then Process ends with a sentence "Your registration completed"
     And User clicks continue button
+    And User clicks logout button
     And User "<userId>" is able to login on login page with login and password
     And Correct data are displayed in user page
   Examples:

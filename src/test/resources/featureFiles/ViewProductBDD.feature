@@ -6,6 +6,7 @@ Feature: View of a product
     When User presses the register button
     Then Process ends with a sentence "Your registration completed"
     And User clicks continue button
+    And User clicks logout button
     And User "basicAccount" is able to login on login page with login and password
 
 

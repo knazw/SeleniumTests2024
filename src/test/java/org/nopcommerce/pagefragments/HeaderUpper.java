@@ -2,6 +2,7 @@ package org.nopcommerce.pagefragments;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example.pageobjects.ExtendedBasePage;
+import org.nopcommerce.pageobjects.MainPage;
 import org.nopcommerce.pageobjects.MyAccountPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,12 +26,10 @@ public class HeaderUpper extends ExtendedBasePage {
     @CacheLookup
     WebElement cart;
 
-    /*
-    public HeaderUpper(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
-    }
-    */
+    @FindBy(xpath = "//a[@class='ico-logout']")
+    @CacheLookup
+    WebElement logoutLink;
+
     public HeaderUpper(WebDriverManager webDriverManager) {
         super(webDriverManager);
         PageFactory.initElements(driver, this);
@@ -46,7 +45,12 @@ public class HeaderUpper extends ExtendedBasePage {
         click(myAccountLink);
 
         return new MyAccountPage(webDriverManager);
-        //return new MyAccountPage(driver);
+    }
+
+    public MainPage clickLogoutLink() {
+        click(logoutLink);
+
+        return new MainPage(webDriverManager);
     }
 
     public HeaderUpper mouseOverCartLabel() {
