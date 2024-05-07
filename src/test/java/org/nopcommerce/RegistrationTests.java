@@ -54,6 +54,8 @@ public class RegistrationTests extends BaseTest{
 
         mainPage = registerResult.clickContinue();
 
+        mainPage.getHeaderUpperPage().clickLogoutLink();
+
         LoginPage loginPage = mainPage.clickLogin();
         loginPage.setTextBoxEmail(user.email);
         loginPage.setTextBoxPassword(user.password);

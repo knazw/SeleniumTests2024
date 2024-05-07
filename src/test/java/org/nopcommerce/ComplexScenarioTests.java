@@ -49,6 +49,8 @@ public class ComplexScenarioTests extends BaseTest{
 
         mainPage = registerResult.clickContinue();
 
+        mainPage.getHeaderUpperPage().clickLogoutLink();
+
         LoginPage loginPage = mainPage.clickLogin();
         loginPage.setTextBoxEmail(user.email);
         loginPage.setTextBoxPassword(user.password);
@@ -114,6 +116,8 @@ public class ComplexScenarioTests extends BaseTest{
         Assertions.assertEquals("Your registration completed", registrationResult);
 
         mainPage = registerResult.clickContinue();
+
+        mainPage.getHeaderUpperPage().clickLogoutLink();
 
         LoginPage loginPage = mainPage.clickLogin();
         loginPage.setTextBoxEmail(user.email);
