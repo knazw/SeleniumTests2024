@@ -151,6 +151,11 @@ public class RegistrationSteps extends BaseTest {
         this.stepsData.mainPage = this.stepsData.registerResult.clickContinue();
     }
 
+    @And("User clicks logout button")
+    public void UserClicksLogoutButton() {
+        this.stepsData.mainPage.getHeaderUpperPage().clickLogoutLink();
+    }
+
     @And("User {string} is able to login on login page with login and password")
     public void UserIsAbleToLoginOnLoginPageWithLoginAndPassword(String username) {
         this.stepsData.loginPage = this.stepsData.mainPage.clickLogin();
