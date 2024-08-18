@@ -5,4 +5,5 @@
 
 
 # Known bugs on  https://demo.nopcommerce.com/ : 
-- rarely after registration process Login button changes to Logout button 
+- tests of demo.nopcommerce.com are failing because this site started to be secured by captcha 
+- rarely after registration process Login button changes to Logout button
